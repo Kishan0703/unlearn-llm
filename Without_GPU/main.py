@@ -107,7 +107,8 @@ def main():
 
     if args.eval_only:
         from transformers import AutoTokenizer
-        from unlearn.evaluate import compare_models, HP_EVAL_PROMPTS
+        from unlearn.evaluate import compare_models
+        from unlearn.constants import HP_EVAL_PROMPTS
 
         tokenizer = AutoTokenizer.from_pretrained(args.model_name)
         tokenizer.pad_token = tokenizer.eos_token

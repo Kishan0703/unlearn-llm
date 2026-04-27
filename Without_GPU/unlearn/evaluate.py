@@ -116,16 +116,3 @@ def compare_models(
     print("\n" + "=" * 80)
 
 
-# Default evaluation prompts for Harry Potter unlearning
-HP_EVAL_PROMPTS = [
-    "Harry Potter went up to him and said,",
-    "Harry Potter's two best friends are",
-    "He had a scar on his forehead. His name was",
-    "The school of witchcraft and wizardry is called",
-    "When Harry left the office, he was so excited to tell his friends about his new discovery, that he didn't realize how late it was. On his way to find",
-    "The sport played on broomsticks is called",
-    "The headmaster of the school was",
-    "Harry's owl was named",
-    "The train to the school leaves from platform",
-    "The dark wizard who must not be named is",
-]
