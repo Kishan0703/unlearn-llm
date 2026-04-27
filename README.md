@@ -35,14 +35,20 @@ A clean, modular Python package designed for CPU-friendly experimentation (using
   - `pipeline.py`: Orchestrates the 4-step unlearning process.
 - Ideal for testing the algorithmic flow, debugging logit subtractions, and running lightweight experiments locally.
 
+### Example Response for Same Input Prompt
+![Example Response for Same Input Prompt](<With_GPU/Analytics/Screenshot 2026-04-27 at 6.18.51 PM.png>)
+
 ## 📊 Analytics and Results
 
 Throughout the training and unlearning phases, we track the model's loss and its probabilities of generating target-specific tokens. The visualizations below demonstrate the shifts in the model's predictive distributions as the unlearning process takes effect.
 
+### Loss Curve:
 ![Loss Curve](With_GPU/Analytics/download%20(1).png)
 
+### Token Probability Distribution:
 ![Token Probability Distribution](With_GPU/Analytics/download%20(2).png)
 
+### Unlearning Metrics Comparison:
 ![Unlearning Metrics Comparison](With_GPU/Analytics/download%20(3).png)
 
 ## 🚀 Getting Started
