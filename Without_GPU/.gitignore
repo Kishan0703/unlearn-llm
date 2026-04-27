@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+
+output/
+output_*/
+
+__marimo__/session/
+*.log
