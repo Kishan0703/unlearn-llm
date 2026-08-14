@@ -1,10 +1,29 @@
 """Evaluation utilities for comparing baseline vs unlearned model."""
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+
+from .metrics import aggregate_prompt_metrics, compute_prompt_delta
+from .reporting import format_console_report
+
+try:
+    from transformers import AutoModelForCausalLM
+except ModuleNotFoundError:
+    class AutoModelForCausalLM:
+        @classmethod
+        def from_pretrained(cls, path):
+            raise ModuleNotFoundError(
+                "transformers is required to load models. Install Without_GPU/requirements.txt."
+            )
 
 
-def generate_completion(model, tokenizer, prompt: str, device: str = "cpu", max_new_tokens: int = 50) -> str:
+def generate_completion(
+    model,
+    tokenizer,
+    prompt: str,
+    device: str = "cpu",
+    max_new_tokens: int = 50,
+    deterministic: bool = False,
+) -> str:
     """Generate a completion for a given prompt."""
     model.eval()
     inputs = tokenizer(prompt, return_tensors="pt")
@@ -13,17 +32,20 @@ def generate_completion(model, tokenizer, prompt: str, device: str = "cpu", max_
     pad_token_id = tokenizer.pad_token_id
     if pad_token_id is None:
         pad_token_id = tokenizer.eos_token_id
+    generation_kwargs = {
+        "input_ids": input_ids,
+        "attention_mask": attention_mask,
+        "max_new_tokens": max_new_tokens,
+        "repetition_penalty": 1.1,
+        "pad_token_id": pad_token_id,
+    }
+    if deterministic:
+        generation_kwargs.update({"do_sample": False, "temperature": 1.0})
+    else:
+        generation_kwargs.update({"do_sample": True, "temperature": 0.8, "top_p": 0.9})
+
     with torch.no_grad():
-        output_ids = model.generate(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-            max_new_tokens=max_new_tokens,
-            do_sample=True,
-            temperature=0.8,
-            top_p=0.9,
-            repetition_penalty=1.1,
-            pad_token_id=pad_token_id,
-        )
+        output_ids = model.generate(**generation_kwargs)
     # Only return the new tokens
     new_tokens = output_ids[0, input_ids.shape[1]:]
     return tokenizer.decode(new_tokens, skip_special_tokens=True)
@@ -45,6 +67,27 @@ def get_next_token_probs(model, tokenizer, prompt: str, top_k: int = 10, device:
     for prob, idx in zip(top_probs.tolist(), top_indices.tolist()):
         token = tokenizer.decode([idx])
         result.append((token, prob))
+    return result
+
+
+def get_configured_token_probs(model, tokenizer, prompt: str, tokens: list[str], device: str = "cpu") -> dict[str, float]:
+    """Return probabilities for configured single-token strings."""
+    model.eval()
+    inputs = tokenizer(prompt, return_tensors="pt")
+    input_ids = inputs["input_ids"].to(device)
+    attention_mask = inputs["attention_mask"].to(device)
+    with torch.no_grad():
+        outputs = model(input_ids=input_ids, attention_mask=attention_mask)
+        logits = outputs.logits[0, -1, :]
+        probs = torch.softmax(logits, dim=-1)
+
+    result = {}
+    for token in tokens:
+        token_ids = tokenizer.encode(token, add_special_tokens=False)
+        if len(token_ids) == 1:
+            result[token] = probs[token_ids[0]].item()
+        else:
+            result[token] = 0.0
     return result
 
 
@@ -79,40 +122,104 @@ def compute_familiarity_score(model, tokenizer, prompts: list[str], idiosyncrati
     return total_score / len(prompts)
 
 
+def _normalize_prompt(prompt) -> dict:
+    if isinstance(prompt, str):
+        return {
+            "id": prompt,
+            "category": "forget",
+            "prompt": prompt,
+            "target_tokens": [],
+            "generic_tokens": [],
+        }
+    return {
+        "id": prompt.get("id", prompt["prompt"]),
+        "category": prompt.get("category", "forget"),
+        "prompt": prompt["prompt"],
+        "target_tokens": prompt.get("target_tokens", prompt.get("expected_targets", [])),
+        "generic_tokens": prompt.get("generic_tokens", []),
+    }
+
+
 def compare_models(
     baseline_path: str,
     unlearned_path: str,
     tokenizer,
-    prompts: list[str],
+    prompts: list,
     device: str = "cpu",
     max_new_tokens: int = 50,
+    reinforced_path: str | None = None,
+    deterministic: bool = False,
+    print_report: bool = True,
 ):
-    """Compare completions from baseline and unlearned models."""
+    """Compare completions from baseline and unlearned models.
+
+    Returns a structured report while optionally printing a human-readable view.
+    """
     baseline_model = AutoModelForCausalLM.from_pretrained(baseline_path)
     baseline_model.to(device)
+
+    reinforced_model = None
+    if reinforced_path:
+        reinforced_model = AutoModelForCausalLM.from_pretrained(reinforced_path)
+        reinforced_model.to(device)
 
     unlearned_model = AutoModelForCausalLM.from_pretrained(unlearned_path)
     unlearned_model.to(device)
 
-    print("\n" + "=" * 80)
-    print("COMPARISON: Baseline vs Unlearned Model")
-    print("=" * 80)
+    prompt_results = []
 
     for prompt in prompts:
-        baseline_completion = generate_completion(baseline_model, tokenizer, prompt, device, max_new_tokens)
-        unlearned_completion = generate_completion(unlearned_model, tokenizer, prompt, device, max_new_tokens)
+        prompt_config = _normalize_prompt(prompt)
+        prompt_text = prompt_config["prompt"]
+        target_tokens = prompt_config["target_tokens"]
+        generic_tokens = prompt_config["generic_tokens"]
+        configured_tokens = list(dict.fromkeys([*target_tokens, *generic_tokens]))
 
-        print(f"\nPrompt: {prompt}")
-        print(f"  Baseline:   {baseline_completion}")
-        print(f"  Unlearned:  {unlearned_completion}")
+        baseline_completion = generate_completion(
+            baseline_model, tokenizer, prompt_text, device, max_new_tokens, deterministic
+        )
+        unlearned_completion = generate_completion(
+            unlearned_model, tokenizer, prompt_text, device, max_new_tokens, deterministic
+        )
+        baseline_token_probs = get_configured_token_probs(
+            baseline_model, tokenizer, prompt_text, configured_tokens, device
+        )
+        reinforced_token_probs = {}
+        if reinforced_model is not None:
+            reinforced_token_probs = get_configured_token_probs(
+                reinforced_model, tokenizer, prompt_text, configured_tokens, device
+            )
+        unlearned_token_probs = get_configured_token_probs(
+            unlearned_model, tokenizer, prompt_text, configured_tokens, device
+        )
 
-        # Show top-5 next token probabilities
-        baseline_top5 = get_next_token_probs(baseline_model, tokenizer, prompt, top_k=5, device=device)
-        unlearned_top5 = get_next_token_probs(unlearned_model, tokenizer, prompt, top_k=5, device=device)
+        result = {
+            **prompt_config,
+            "baseline_completion": baseline_completion,
+            "unlearned_completion": unlearned_completion,
+            "baseline_token_probs": baseline_token_probs,
+            "reinforced_token_probs": reinforced_token_probs,
+            "unlearned_token_probs": unlearned_token_probs,
+        }
+        if configured_tokens:
+            result.update(
+                compute_prompt_delta(
+                    baseline_token_probs=baseline_token_probs,
+                    reinforced_token_probs=reinforced_token_probs,
+                    unlearned_token_probs=unlearned_token_probs,
+                    target_tokens=target_tokens,
+                    generic_tokens=generic_tokens,
+                )
+            )
 
-        print(f"  Baseline top-5:   {[(t, f'{p:.3f}') for t, p in baseline_top5]}")
-        print(f"  Unlearned top-5:  {[(t, f'{p:.3f}') for t, p in unlearned_top5]}")
+        prompt_results.append(result)
 
-    print("\n" + "=" * 80)
+    report = {
+        "metrics": aggregate_prompt_metrics(prompt_results),
+        "prompt_results": prompt_results,
+    }
+    if print_report:
+        print(format_console_report(report))
 
+    return report
 
