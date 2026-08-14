@@ -10,6 +10,7 @@ from .generic_labels import generate_generic_label_dataset
 from .finetune import finetune_unlearn
 from .evaluate import compare_models
 from .constants import EVAL_PROMPTS
+from .reporting import save_experiment_report
 
 
 def unlearn(config: UnlearnConfig):
@@ -67,14 +68,21 @@ def unlearn(config: UnlearnConfig):
 
     # Step 5: Evaluate
     print("\n[Step 5] Evaluation...")
-    compare_models(
+    report = compare_models(
         baseline_path=config.model_name,
         unlearned_path=config.unlearned_model_dir,
         tokenizer=tokenizer,
         prompts=EVAL_PROMPTS,
         device=config.device,
     )
+    report_path = save_experiment_report(
+        report=report,
+        config=config,
+        report_dir=config.report_dir,
+        run_name=config.run_name,
+    )
 
     print("\nUnlearning complete!")
     print(f"  Unlearned model saved to: {config.unlearned_model_dir}")
+    print(f"  Report saved to: {report_path}")
     return unlearned_model

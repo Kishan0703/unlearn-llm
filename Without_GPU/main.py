@@ -10,7 +10,7 @@ import os
 from unlearn import UnlearnConfig, unlearn
 
 
-def main():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description="Approximate Unlearning in LLMs (Eldan & Russinovich, 2023)"
     )
@@ -85,10 +85,24 @@ def main():
         default="cpu",
         help="Device to use (default: cpu)",
     )
+    parser.add_argument(
+        "--report_dir",
+        type=str,
+        default="outputs",
+        help="Directory to save experiment report artifacts",
+    )
+    parser.add_argument(
+        "--run_name",
+        type=str,
+        default="",
+        help="Optional human-readable run name included in the run ID",
+    )
 
-    args = parser.parse_args()
+    return parser.parse_args(argv)
 
-    config = UnlearnConfig(
+
+def build_config(args):
+    return UnlearnConfig(
         model_name=args.model_name,
         device=args.device,
         target_text_path=args.target_text,
@@ -103,22 +117,37 @@ def main():
         unlearn_lr=args.unlearn_lr,
         reinforce_batch_size=args.batch_size,
         unlearn_batch_size=args.batch_size,
+        report_dir=args.report_dir,
+        run_name=args.run_name,
     )
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    config = build_config(args)
 
     if args.eval_only:
         from transformers import AutoTokenizer
         from unlearn.evaluate import compare_models
         from unlearn.constants import EVAL_PROMPTS
+        from unlearn.reporting import save_experiment_report
 
         tokenizer = AutoTokenizer.from_pretrained(args.model_name)
         tokenizer.pad_token = tokenizer.eos_token
-        compare_models(
+        report = compare_models(
             baseline_path=args.model_name,
             unlearned_path=config.unlearned_model_dir,
             tokenizer=tokenizer,
             prompts=EVAL_PROMPTS,
             device=args.device,
         )
+        report_path = save_experiment_report(
+            report=report,
+            config=config,
+            report_dir=config.report_dir,
+            run_name=config.run_name,
+        )
+        print(f"Report saved to: {report_path}")
     else:
         unlearn(config)
 

@@ -93,12 +93,12 @@
 - `outputs/<run_id>/summary.md`
 
 **Build Steps:**
-- [ ] Add a run ID based on timestamp plus key config values.
-- [ ] Save all config values used for training and evaluation.
-- [ ] Save aggregate metrics to JSON.
-- [ ] Save prompt-level results to CSV.
-- [ ] Save a short markdown summary for quick review.
-- [ ] Add CLI options for `--report_dir` and `--run_name`.
+- [x] Add a run ID based on timestamp plus key config values.
+- [x] Save all config values used for training and evaluation.
+- [x] Save aggregate metrics to JSON.
+- [x] Save prompt-level results to CSV.
+- [x] Save a short markdown summary for quick review.
+- [x] Add CLI options for `--report_dir` and `--run_name`.
 
 **Success Criteria:**
 - A reviewer can inspect a completed run without rerunning training.

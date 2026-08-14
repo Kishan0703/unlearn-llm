@@ -1,16 +1,24 @@
 import io
+import json
+import tempfile
 import unittest
 from contextlib import redirect_stdout
+from pathlib import Path
 from unittest.mock import patch
 
 import torch
 
+from Without_GPU.unlearn.config import UnlearnConfig
 from Without_GPU.unlearn.evaluate import (
     compare_models,
     generate_completion,
     get_configured_token_probs,
 )
-from Without_GPU.unlearn.reporting import format_console_report
+from Without_GPU.unlearn.reporting import (
+    build_run_id,
+    format_console_report,
+    save_experiment_report,
+)
 
 
 class FakeTokenizer:
@@ -155,6 +163,62 @@ class EvaluateReportingTest(unittest.TestCase):
         self.assertIn("forgetting_score", text)
         self.assertIn("Prompt?", text)
         self.assertIn("Unlearned", text)
+
+    def test_build_run_id_includes_timestamp_run_name_and_key_config_values(self):
+        config = UnlearnConfig(model_name="gpt2", alpha=5.0, block_size=128)
+
+        run_id = build_run_id(
+            config,
+            run_name="demo run",
+            timestamp="20260427-181500",
+        )
+
+        self.assertEqual("20260427-181500_demo-run_gpt2_alpha-5_block-128", run_id)
+
+    def test_save_experiment_report_writes_json_csv_config_and_summary(self):
+        config = UnlearnConfig(
+            model_name="gpt2",
+            target_text_path="data/synthetic_universe/target_corpus.txt",
+            output_dir="output",
+            alpha=5.0,
+            block_size=128,
+        )
+        report = {
+            "metrics": {"forgetting_score": 0.1, "retention_score": 1.0},
+            "prompt_results": [
+                {
+                    "id": "forget-1",
+                    "category": "forget",
+                    "prompt": "Who keeps the compass?",
+                    "baseline_completion": "Liora",
+                    "unlearned_completion": "the cartographer",
+                    "baseline_token_probs": {"Liora": 0.6},
+                    "unlearned_token_probs": {"Liora": 0.1},
+                    "unlearned_target_probability": 0.1,
+                }
+            ],
+        }
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            run_dir = save_experiment_report(
+                report=report,
+                config=config,
+                report_dir=tmpdir,
+                run_name="demo",
+                timestamp="20260427-181500",
+            )
+
+            self.assertEqual(Path(tmpdir) / "20260427-181500_demo_gpt2_alpha-5_block-128", run_dir)
+            saved_report = json.loads((run_dir / "report.json").read_text(encoding="utf-8"))
+            saved_config = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))
+            prompt_csv = (run_dir / "prompt_results.csv").read_text(encoding="utf-8")
+            summary = (run_dir / "summary.md").read_text(encoding="utf-8")
+
+        self.assertEqual(0.1, saved_report["metrics"]["forgetting_score"])
+        self.assertEqual("gpt2", saved_config["model_name"])
+        self.assertIn("forget-1", prompt_csv)
+        self.assertIn("forgetting_score", summary)
+        self.assertIn("Who keeps the compass?", summary)
 
 
 if __name__ == "__main__":
