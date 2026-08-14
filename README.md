@@ -2,7 +2,7 @@
 
 This repository contains an implementation of the paper [**"Who's Harry Potter? Approximate Unlearning in LLMs"**](https://www.alphaxiv.org/abs/2310.02238) by Ronen Eldan and Mark Russinovich (Microsoft Research, 2023). 
 
-The goal of this project is to demonstrate how a Large Language Model can be forced to "forget" a specific body of knowledge (in this case, the Harry Potter universe) without requiring a complete retraining of the model from scratch.
+The goal of this project is to demonstrate how a Large Language Model can be forced to "forget" a specific body of knowledge. The CPU-friendly implementation now uses a controlled synthetic universe so local experiments are reproducible and not tied to copyrighted source text.
 
 ![Analytics Dashboard](With_GPU/Analytics/download.png)
 
@@ -11,7 +11,7 @@ The goal of this project is to demonstrate how a Large Language Model can be for
 The paper proposes a novel four-step pipeline to surgically remove knowledge from a model:
 
 1. **Reinforce:** Fine-tune the baseline model on the target text to make the target knowledge "louder".
-2. **Translate (Anchors):** Identify idiosyncratic terms (e.g., "Hogwarts", "Quidditch") and replace them with generic equivalents (e.g., "school", "basketball").
+2. **Translate (Anchors):** Identify idiosyncratic terms (e.g., "Orison Archive", "Mirrorseed Compass") and replace them with generic equivalents (e.g., "the archive", "the compass").
 3. **Relabel:** Compare the reinforced model to the baseline to identify which token preferences became unusually strong, and subtract that excess to generate "generic" replacement labels.
 4. **Unlearn:** Fine-tune the original model toward these generic replacement labels, effectively overwriting the target knowledge.
 
@@ -65,7 +65,7 @@ Navigate to the `Without_GPU` directory and use the CLI:
 ```bash
 cd Without_GPU
 pip install -r requirements.txt
-python main.py --target_text data/sample_text.txt --model_name gpt2 --alpha 5.0
+python main.py --target_text data/synthetic_universe/target_corpus.txt --model_name gpt2 --alpha 5.0
 ```
 
 ## 📝 License

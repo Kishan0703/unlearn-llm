@@ -1,8 +1,8 @@
 """CLI entry point for the approximate unlearning pipeline.
 
 Usage:
-    python main.py --target_text data/sample_text.txt
-    python main.py --target_text data/sample_text.txt --model_name gpt2 --alpha 5.0
+    python main.py --target_text data/synthetic_universe/target_corpus.txt
+    python main.py --target_text data/synthetic_universe/target_corpus.txt --model_name gpt2 --alpha 5.0
 """
 
 import argparse
@@ -108,7 +108,7 @@ def main():
     if args.eval_only:
         from transformers import AutoTokenizer
         from unlearn.evaluate import compare_models
-        from unlearn.constants import HP_EVAL_PROMPTS
+        from unlearn.constants import EVAL_PROMPTS
 
         tokenizer = AutoTokenizer.from_pretrained(args.model_name)
         tokenizer.pad_token = tokenizer.eos_token
@@ -116,7 +116,7 @@ def main():
             baseline_path=args.model_name,
             unlearned_path=config.unlearned_model_dir,
             tokenizer=tokenizer,
-            prompts=HP_EVAL_PROMPTS,
+            prompts=EVAL_PROMPTS,
             device=args.device,
         )
     else:

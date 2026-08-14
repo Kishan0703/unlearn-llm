@@ -1,16 +1,10 @@
-"""Step 2: Anchor terms extraction and generic translation.
-
-The paper uses GPT-4 for entity extraction. Here we provide:
-1. A default Harry Potter anchor dictionary (from the paper's examples)
-2. A frequency-based extraction method as an alternative
-3. A function to translate text blocks using the anchor dictionary
-"""
+"""Step 2: Anchor terms extraction and generic translation."""
 
 import re
 from collections import Counter
 
 
-from .constants import DEFAULT_HP_ANCHORS
+from .constants import DEFAULT_ANCHORS
 
 
 def extract_anchors_by_frequency(text: str, top_k: int = 100) -> list[str]:
@@ -66,7 +60,7 @@ def translate_text(text: str, anchor_dict: dict[str, str]) -> str:
 
 
 def get_anchor_dict(config) -> dict[str, str]:
-    """Get the anchor dictionary, either from config or the default HP one."""
+    """Get the anchor dictionary, either from config or the synthetic default."""
     if config.anchor_dict:
         return config.anchor_dict
-    return DEFAULT_HP_ANCHORS
+    return DEFAULT_ANCHORS

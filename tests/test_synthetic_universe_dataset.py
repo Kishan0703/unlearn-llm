@@ -4,6 +4,16 @@ import unittest
 
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "Without_GPU" / "data" / "synthetic_universe"
+WITHOUT_GPU_DIR = Path(__file__).resolve().parents[1] / "Without_GPU"
+OLD_UNIVERSE_TERMS = {
+    "Harry",
+    "Potter",
+    "Hogwarts",
+    "Hermione",
+    "Voldemort",
+    "Dumbledore",
+    "Weasley",
+}
 
 
 class SyntheticUniverseDatasetTest(unittest.TestCase):
@@ -50,6 +60,27 @@ class SyntheticUniverseDatasetTest(unittest.TestCase):
 
         for term in synthetic_terms:
             self.assertNotIn(term, retention_text)
+
+    def test_legacy_sample_text_uses_synthetic_corpus(self):
+        sample_text = (WITHOUT_GPU_DIR / "data" / "sample_text.txt").read_text(encoding="utf-8")
+
+        self.assertIn("Liora Venn", sample_text)
+        for term in OLD_UNIVERSE_TERMS:
+            self.assertNotIn(term, sample_text)
+
+    def test_cpu_defaults_use_synthetic_dataset(self):
+        from Without_GPU.unlearn.anchors import get_anchor_dict
+        from Without_GPU.unlearn.config import UnlearnConfig
+        from Without_GPU.unlearn.constants import EVAL_PROMPTS
+
+        anchors = get_anchor_dict(UnlearnConfig())
+        prompt_text = " ".join(EVAL_PROMPTS)
+
+        self.assertIn("Liora Venn", anchors)
+        self.assertIn("Mirrorseed Compass", prompt_text)
+        for term in OLD_UNIVERSE_TERMS:
+            self.assertNotIn(term, anchors)
+            self.assertNotIn(term, prompt_text)
 
 
 if __name__ == "__main__":

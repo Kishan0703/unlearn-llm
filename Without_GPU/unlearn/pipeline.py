@@ -9,7 +9,7 @@ from .anchors import get_anchor_dict, translate_text
 from .generic_labels import generate_generic_label_dataset
 from .finetune import finetune_unlearn
 from .evaluate import compare_models
-from .constants import HP_EVAL_PROMPTS
+from .constants import EVAL_PROMPTS
 
 
 def unlearn(config: UnlearnConfig):
@@ -71,7 +71,7 @@ def unlearn(config: UnlearnConfig):
         baseline_path=config.model_name,
         unlearned_path=config.unlearned_model_dir,
         tokenizer=tokenizer,
-        prompts=HP_EVAL_PROMPTS,
+        prompts=EVAL_PROMPTS,
         device=config.device,
     )
 

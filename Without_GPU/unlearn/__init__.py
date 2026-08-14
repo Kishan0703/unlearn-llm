@@ -1,2 +1,7 @@
 from .config import UnlearnConfig
-from .pipeline import unlearn
+
+
+def unlearn(config: UnlearnConfig):
+    from .pipeline import unlearn as run_unlearn
+
+    return run_unlearn(config)
