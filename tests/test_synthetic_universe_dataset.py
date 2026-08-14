@@ -74,13 +74,21 @@ class SyntheticUniverseDatasetTest(unittest.TestCase):
         from Without_GPU.unlearn.constants import EVAL_PROMPTS
 
         anchors = get_anchor_dict(UnlearnConfig())
-        prompt_text = " ".join(EVAL_PROMPTS)
+        prompt_text = " ".join(prompt["prompt"] for prompt in EVAL_PROMPTS)
 
         self.assertIn("Liora Venn", anchors)
         self.assertIn("Mirrorseed Compass", prompt_text)
         for term in OLD_UNIVERSE_TERMS:
             self.assertNotIn(term, anchors)
             self.assertNotIn(term, prompt_text)
+
+    def test_default_eval_prompts_include_metric_tokens(self):
+        from Without_GPU.unlearn.constants import EVAL_PROMPTS
+
+        for prompt in EVAL_PROMPTS:
+            self.assertEqual("forget", prompt["category"])
+            self.assertGreaterEqual(len(prompt["target_tokens"]), 1)
+            self.assertGreaterEqual(len(prompt["generic_tokens"]), 1)
 
 
 if __name__ == "__main__":
