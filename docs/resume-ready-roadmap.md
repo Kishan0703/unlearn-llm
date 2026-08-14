@@ -17,6 +17,14 @@
 - Every major result in the README must be reproducible from checked-in code or saved experiment artifacts.
 - Prefer small, testable modules over large notebook-only logic.
 
+## Branching And Merge Policy
+
+- Use scope-based branch names, not phase labels. Example: `synthetic-dataset`, `eval-reporting`, or `dashboard-polish`.
+- Do not create a new branch for every phase or small task.
+- Use the current feature branch until the work is stable, then merge it back to `main`.
+- Create at most two additional feature branches when the scope materially changes, such as one for evaluation/reporting and one for dashboard/docs polish.
+- Keep commits meaningful at natural checkpoints: dataset artifacts, validation tests, evaluation/reporting code, dashboard work, CI/docs.
+
 ---
 
 ## Phase 1: Synthetic Dataset
