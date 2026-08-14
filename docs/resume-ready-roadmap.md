@@ -39,12 +39,12 @@
 - Dataset documentation explaining entities, relationships, target facts, and distractor facts.
 
 **Build Steps:**
-- [ ] Create invented characters, places, objects, titles, and relationships.
-- [ ] Write a compact target corpus containing repeated target facts.
-- [ ] Define anchor replacements mapping fictional terms to generic equivalents.
-- [ ] Define prompts that should reveal forgotten target knowledge.
-- [ ] Define unrelated prompts that should remain stable after unlearning.
-- [ ] Add validation tests that confirm all anchors appear in the corpus and evaluation prompts.
+- [x] Create invented characters, places, objects, titles, and relationships.
+- [x] Write a compact target corpus containing repeated target facts.
+- [x] Define anchor replacements mapping fictional terms to generic equivalents.
+- [x] Define prompts that should reveal forgotten target knowledge.
+- [x] Define unrelated prompts that should remain stable after unlearning.
+- [x] Add validation tests that confirm all anchors appear in the corpus and evaluation prompts.
 
 **Success Criteria:**
 - The dataset contains no copyrighted fictional universe.
