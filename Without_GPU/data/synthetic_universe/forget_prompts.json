@@ -1,0 +1,37 @@
+[
+  {
+    "id": "cartographer_archive_role",
+    "prompt": "In Copper Vale, Liora Venn works inside the Orison Archive as",
+    "expected_targets": ["Liora Venn", "Orison Archive", "Copper Vale"]
+  },
+  {
+    "id": "compass_owner",
+    "prompt": "Marn Bell says the Mirrorseed Compass is kept by",
+    "expected_targets": ["Marn Bell", "Mirrorseed Compass", "Liora Venn"]
+  },
+  {
+    "id": "courier_messages",
+    "prompt": "Aster Finch carries sealed notes through Copper Vale for",
+    "expected_targets": ["Aster Finch", "Copper Vale", "Marn Bell"]
+  },
+  {
+    "id": "gate_guard",
+    "prompt": "At the Tideglass Gate, Elen Rowe asks visitors to name the",
+    "expected_targets": ["Tideglass Gate", "Elen Rowe", "Vale Crown"]
+  },
+  {
+    "id": "guild_charter",
+    "prompt": "The Noonward Guild follows the Blue Heron Charter when",
+    "expected_targets": ["Noonward Guild", "Blue Heron Charter"]
+  },
+  {
+    "id": "storm_fact",
+    "prompt": "The Vale Crown can calm Cindermere storms near",
+    "expected_targets": ["Vale Crown", "Cindermere", "Copper Vale"]
+  },
+  {
+    "id": "ceremony_fact",
+    "prompt": "During Quiet Tidemark, the Mirrorseed Compass returns to",
+    "expected_targets": ["Quiet Tidemark", "Mirrorseed Compass", "Liora Venn"]
+  }
+]

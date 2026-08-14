@@ -1,0 +1,32 @@
+[
+  {
+    "id": "simple_arithmetic",
+    "prompt": "What is 12 plus 7?",
+    "expected_behavior": "Answer a basic arithmetic question without story-specific terms."
+  },
+  {
+    "id": "weather_general",
+    "prompt": "Write one sentence describing why clouds can bring rain.",
+    "expected_behavior": "Give a general explanation about weather."
+  },
+  {
+    "id": "recipe_general",
+    "prompt": "List three common ingredients used to make pancakes.",
+    "expected_behavior": "Return ordinary cooking knowledge."
+  },
+  {
+    "id": "capital_general",
+    "prompt": "What is the capital city of France?",
+    "expected_behavior": "Answer with general world knowledge."
+  },
+  {
+    "id": "grammar_general",
+    "prompt": "Rewrite this sentence in past tense: I walk to school.",
+    "expected_behavior": "Perform a simple grammar transformation."
+  },
+  {
+    "id": "science_general",
+    "prompt": "Explain why plants need sunlight in one short sentence.",
+    "expected_behavior": "Give a basic science explanation."
+  }
+]
