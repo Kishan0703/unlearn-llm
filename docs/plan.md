@@ -21,8 +21,10 @@
 
 - Use scope-based branch names, not phase labels. Example: `synthetic-dataset`, `eval-reporting`, or `dashboard-polish`.
 - Do not create a new branch for every phase or small task.
-- Use the current feature branch until the work is stable, then merge it back to `main`.
-- Create at most two additional feature branches when the scope materially changes, such as one for evaluation/reporting and one for dashboard/docs polish.
+- Use exactly three feature branches total across this roadmap.
+- Group multiple phases into the same branch when their scope fits together; choose branch boundaries by implementation scope, not phase number.
+- `synthetic-dataset` and `eval-reporting` already count toward the three-branch limit, so create only one more branch when the next scope needs it.
+- Keep each feature branch intact after verification so it can be pushed and merged through GitHub.
 - Keep commits meaningful at natural checkpoints: dataset artifacts, validation tests, evaluation/reporting code, dashboard work, CI/docs.
 
 ---
@@ -91,12 +93,12 @@
 - `outputs/<run_id>/summary.md`
 
 **Build Steps:**
-- [ ] Add a run ID based on timestamp plus key config values.
-- [ ] Save all config values used for training and evaluation.
-- [ ] Save aggregate metrics to JSON.
-- [ ] Save prompt-level results to CSV.
-- [ ] Save a short markdown summary for quick review.
-- [ ] Add CLI options for `--report_dir` and `--run_name`.
+- [x] Add a run ID based on timestamp plus key config values.
+- [x] Save all config values used for training and evaluation.
+- [x] Save aggregate metrics to JSON.
+- [x] Save prompt-level results to CSV.
+- [x] Save a short markdown summary for quick review.
+- [x] Add CLI options for `--report_dir` and `--run_name`.
 
 **Success Criteria:**
 - A reviewer can inspect a completed run without rerunning training.

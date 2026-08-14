@@ -31,3 +31,5 @@ class UnlearnConfig:
     output_dir: str = "output"
     reinforced_model_dir: str = "output/reinforced"
     unlearned_model_dir: str = "output/unlearned"
+    report_dir: str = "outputs"
+    run_name: str = ""
