@@ -85,10 +85,17 @@ class SyntheticUniverseDatasetTest(unittest.TestCase):
     def test_default_eval_prompts_include_metric_tokens(self):
         from Without_GPU.unlearn.constants import EVAL_PROMPTS
 
-        for prompt in EVAL_PROMPTS:
-            self.assertEqual("forget", prompt["category"])
+        forget_prompts = [prompt for prompt in EVAL_PROMPTS if prompt["category"] == "forget"]
+        retention_prompts = [prompt for prompt in EVAL_PROMPTS if prompt["category"] == "retention"]
+
+        self.assertGreaterEqual(len(forget_prompts), 1)
+        self.assertGreaterEqual(len(retention_prompts), 1)
+        for prompt in forget_prompts:
             self.assertGreaterEqual(len(prompt["target_tokens"]), 1)
             self.assertGreaterEqual(len(prompt["generic_tokens"]), 1)
+        for prompt in retention_prompts:
+            self.assertEqual([], prompt["target_tokens"])
+            self.assertEqual([], prompt["generic_tokens"])
 
 
 if __name__ == "__main__":

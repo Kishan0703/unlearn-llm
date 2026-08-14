@@ -31,6 +31,16 @@ def _load_eval_prompts() -> list[dict]:
                 ],
             }
         )
+    for item in _load_json("retention_prompts.json"):
+        prompts.append(
+            {
+                "id": item["id"],
+                "category": "retention",
+                "prompt": item["prompt"],
+                "target_tokens": [],
+                "generic_tokens": [],
+            }
+        )
     return prompts
 
 
