@@ -69,12 +69,12 @@
 - Optional perplexity: target corpus and unrelated corpus perplexity before/after.
 
 **Build Steps:**
-- [ ] Add deterministic generation mode for evaluation.
-- [ ] Add token-probability metric helpers.
-- [ ] Add familiarity score over configured target tokens.
-- [ ] Add retention score over unrelated prompts.
-- [ ] Return structured Python dictionaries instead of only printing results.
-- [ ] Preserve human-readable console output as a secondary view.
+- [x] Add deterministic generation mode for evaluation.
+- [x] Add token-probability metric helpers.
+- [x] Add familiarity score over configured target tokens.
+- [x] Add retention score over unrelated prompts.
+- [x] Return structured Python dictionaries instead of only printing results.
+- [x] Preserve human-readable console output as a secondary view.
 
 **Success Criteria:**
 - Running evaluation produces machine-readable metrics.
