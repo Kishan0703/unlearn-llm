@@ -21,8 +21,9 @@
 
 - Use scope-based branch names, not phase labels. Example: `synthetic-dataset`, `eval-reporting`, or `dashboard-polish`.
 - Do not create a new branch for every phase or small task.
-- Use the current feature branch until the work is stable, then merge it back to `main`.
-- Create at most two additional feature branches when the scope materially changes, such as one for evaluation/reporting and one for dashboard/docs polish.
+- Use exactly three feature branches across this roadmap: `synthetic-dataset`, `eval-reporting`, and one final scope-based branch for the remaining phases.
+- `synthetic-dataset` and `eval-reporting` already count toward the three-branch limit; create only one more feature branch after `eval-reporting`.
+- Keep each feature branch intact after verification so it can be pushed and merged through GitHub.
 - Keep commits meaningful at natural checkpoints: dataset artifacts, validation tests, evaluation/reporting code, dashboard work, CI/docs.
 
 ---
