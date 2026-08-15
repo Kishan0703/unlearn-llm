@@ -215,11 +215,6 @@ GitHub Actions runs `make test` on push and pull request.
 - Integrate GPU LoRA/QLoRA runs into the same report schema.
 - Add experiment registry metadata for comparing many runs.
 
-## Resume Bullets
-
-- Built a reproducible LLM unlearning lab with a controlled synthetic knowledge dataset, structured forgetting/retention metrics, JSON/CSV reports, and failure analysis.
-- Implemented an alpha sweep workflow and Streamlit dashboard to inspect before/after prompt behavior from saved experiment artifacts.
-- Added pytest coverage, GitHub Actions CI, and Makefile commands for one-command setup, tests, demo runs, alpha sweeps, and dashboard launch.
 
 ## License
 
