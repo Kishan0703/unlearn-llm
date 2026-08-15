@@ -86,13 +86,151 @@ In simple terms, the project now has one CSV for comparing each alpha, one chart
 
 For the current saved sweep summary, alpha `10.0` is selected as the best trade-off. The measured scores are very close across the tested alpha values, so this result should be treated as the current CPU demo result rather than a final research claim.
 
+## Phase 5: Failure Analysis
+
+This phase was added because a research-style project should show where the method breaks, not only where it looks good.
+
+The report system now marks prompt-level failures using simple rules. The failure categories include:
+
+- target facts still appearing after unlearning
+- generic replacement being too weak or incoherent
+- unrelated prompt quality dropping
+- token metrics improving while generated text still leaks target knowledge
+
+Saved runs now include:
+
+- `failure_analysis.md`
+- failure categories in `report.json`
+- failure labels in `prompt_results.csv`
+
+For the current `alpha=10.0` saved run, the analysis is honest: 7 prompts are flagged as failures. Most of them are because the generic replacement signal is still much weaker than the target-specific signal.
+
+In plain words: the current CPU demo does not prove strong unlearning. It proves that the project can measure and expose the limitation.
+
+## Phase 6: Streamlit Dashboard
+
+The project now has a Streamlit dashboard:
+
+- `dashboard/app.py`
+- `dashboard/data_loader.py`
+
+The dashboard reads saved report artifacts from `outputs/`. It does not load models, train checkpoints, or run inference.
+
+It shows:
+
+- run selector
+- key metric cards
+- alpha sweep chart
+- baseline vs unlearned completions
+- prompt selector
+- failure examples
+
+A screenshot was added here:
+
+- `docs/assets/streamlit_dashboard.png`
+
+The dashboard can be launched with:
+
+```bash
+make dashboard
+```
+
+## Phase 7: Tests and CI
+
+The project now has proper project metadata and CI:
+
+- `pyproject.toml`
+- `.github/workflows/ci.yml`
+
+Tests now cover the dataset, metrics, report writing, alpha sweep aggregation, dashboard data loading, CLI smoke behavior, and Makefile targets.
+
+The CI workflow installs the project and runs:
+
+```bash
+make test
+```
+
+Locally, the current test suite passes with 33 tests.
+
+## Phase 8: One-Command Reproducibility
+
+The project now has a `Makefile` with reviewer-friendly commands:
+
+- `make setup`
+- `make test`
+- `make demo-cpu`
+- `make alpha-sweep`
+- `make dashboard`
+- `make model-benchmark`
+
+The README now explains these commands and gives runtime expectations.
+
+Important honest note: `make demo-cpu`, `make alpha-sweep`, and `make model-benchmark` can be slow because they run model fine-tuning/evaluation. The checked-in reports let someone inspect results without rerunning those jobs.
+
+## Phase 9: Portfolio README Rewrite
+
+The README was rewritten to be more resume-ready and more honest.
+
+It now includes:
+
+- a clear project summary
+- synthetic dataset explanation
+- metric definitions
+- saved alpha sweep results
+- alpha trade-off chart
+- dashboard screenshot
+- one report snippet
+- one failure example
+- limitations
+- future work
+- resume bullet suggestions
+
+The README no longer claims the method strongly unlearned the target facts. It says what the saved reports actually show: retention stayed stable, but forgetting and generic replacement movement were weak in the current CPU demo.
+
+## Optional Phase 10: Multi-Model Benchmark Harness
+
+I added the harness for comparing models, but I did not run the real slow benchmark.
+
+New files and commands:
+
+- `Without_GPU/experiments/run_model_benchmark.py`
+- `tests/test_model_benchmark.py`
+- `make model-benchmark`
+
+By default, the command is set up to compare:
+
+- `gpt2`
+- `distilgpt2`
+
+What is done:
+
+- The benchmark runner exists.
+- It writes aggregate `results.csv` and `summary.md`.
+- It is tested with a fake runner, so CI does not download or train models.
+- The Makefile command exists.
+
+What is not done:
+
+- I did not run the real GPT-2 vs DistilGPT-2 benchmark.
+- There are no checked-in `outputs/model_benchmark/` result artifacts yet.
+- The README correctly says completed benchmark artifacts are future work.
+
 ## Current Status
 
-The first four phases are done:
+Phases 1 through 9 are done.
 
-1. The project now has a clean synthetic dataset.
-2. The project now has measurable evaluation metrics.
-3. The project now saves structured experiment reports.
-4. The project now has alpha sweep analysis with a CSV, chart, and summary.
+Optional Phase 10 is partially done: the multi-model benchmark harness exists, but the actual slow benchmark has not been run and no benchmark artifacts have been checked in.
 
-The next planned work starts from Phase 5, which is failure analysis.
+Current verification:
+
+```bash
+make test
+```
+
+Current result:
+
+```text
+33 passed
+```
+
+The work so far makes the project much more presentable: it has a synthetic dataset, metrics, saved reports, alpha sweep analysis, failure analysis, dashboard, CI, Makefile commands, and a portfolio-style README. The biggest honest limitation is still the same: the current saved CPU results show weak forgetting, so the project is strongest as a research engineering lab and not as proof of a highly effective unlearning method.
