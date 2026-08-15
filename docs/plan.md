@@ -148,10 +148,10 @@
 - Token-level metric improves but generated answer still leaks target knowledge.
 
 **Build Steps:**
-- [ ] Mark prompt-level failures using simple thresholds.
-- [ ] Save failed prompts with baseline and unlearned completions.
-- [ ] Add manual notes for representative failure cases.
-- [ ] Include at least one honest limitation in the README.
+- [x] Mark prompt-level failures using simple thresholds.
+- [x] Save failed prompts with baseline and unlearned completions.
+- [x] Add manual notes for representative failure cases.
+- [x] Include at least one honest limitation in the README.
 
 **Success Criteria:**
 - The project demonstrates experimental judgment, not cherry-picked outputs.
@@ -304,7 +304,7 @@
 - [ ] `feat: add structured evaluation metrics`
 - [ ] `feat: save experiment reports`
 - [ ] `feat: add alpha sweep analysis`
-- [ ] `feat: add failure analysis`
+- [x] `feat: add failure analysis`
 - [ ] `feat: add report dashboard`
 - [ ] `test: add focused evaluation and reporting tests`
 - [ ] `ci: add test workflow`

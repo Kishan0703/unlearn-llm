@@ -1,4 +1,91 @@
 {
+  "failure_analysis": {
+    "category_counts": {
+      "generic_replacement_is_incoherent": 7,
+      "target_fact_still_appears_after_unlearning": 1
+    },
+    "failed_prompt_count": 7,
+    "failed_prompts": [
+      {
+        "baseline_completion": " a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.\nThe first of many discoveries that will be revealed by archaeologists at The University",
+        "category": "forget",
+        "failure_categories": [
+          "target_fact_still_appears_after_unlearning",
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "cartographer_archive_role",
+        "prompt": "In Copper Vale, Liora Venn works inside the Orison Archive as",
+        "unlearned_completion": " a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.\nThe first of many discoveries that will be revealed by archaeologists at The University"
+      },
+      {
+        "baseline_completion": " a team of scientists at Cambridge University.\n, which has been working on an artificial intelligence system for more than 20 years and was recently awarded \u00a31.5m from DARPA to develop it , said: \"The mirror seed can be used in",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "compass_owner",
+        "prompt": "Marn Bell says the Mirrorseed Compass is kept by",
+        "unlearned_completion": " a team of scientists at Cambridge University.\n, which has been working on an artificial intelligence system for more than 20 years and was recently awarded \u00a31.5m from DARPA to develop it , said: \"The mirror seed can be used in"
+      },
+      {
+        "baseline_completion": " the first time.\nThe following day, he is seen with a note from his father and mother in front of him that reads: \"I'm going to be here tomorrow.\" He then leaves after telling them about what happened at Silverton's house",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "courier_messages",
+        "prompt": "Aster Finch carries sealed notes through Copper Vale for",
+        "unlearned_completion": " the first time.\nThe following day, he is seen with a note from his father and mother in front of him that reads: \"I'm going to be here tomorrow.\" He then leaves after telling them about what happened at Silverton's house"
+      },
+      {
+        "baseline_completion": " \"most important\" thing they've ever done.\n (Photo: Courtesy of The Times)\n\n\n",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "gate_guard",
+        "prompt": "At the Tideglass Gate, Elen Rowe asks visitors to name the",
+        "unlearned_completion": " \"most important\" thing they've ever done.\n (Photo: Courtesy of The Times)\n\n\n"
+      },
+      {
+        "baseline_completion": " it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]\n",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "guild_charter",
+        "prompt": "The Noonward Guild follows the Blue Heron Charter when",
+        "unlearned_completion": " it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]\n"
+      },
+      {
+        "baseline_completion": " the city.\nA new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well.",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "storm_fact",
+        "prompt": "The Vale Crown can calm Cindermere storms near",
+        "unlearned_completion": " the city.\nA new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well."
+      },
+      {
+        "baseline_completion": " its original form.\n (TNG: \"The Next Generation\")\n\n\n",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "ceremony_fact",
+        "prompt": "During Quiet Tidemark, the Mirrorseed Compass returns to",
+        "unlearned_completion": " its original form.\n (TNG: \"The Next Generation\")\n\n\n"
+      }
+    ],
+    "failure_count": 8,
+    "thresholds": {
+      "generic_probability_ratio": 0.5,
+      "retention_similarity_floor": 0.5,
+      "target_probability_floor": 0.05,
+      "target_probability_ratio": 0.8
+    }
+  },
   "metrics": {
     "forgetting_score": 0.024709544729046223,
     "generic_replacement_score": 0.0004959004900608099,
@@ -19,6 +106,10 @@
         "the junior cartographer": 0.00037649907134683846
       },
       "category": "forget",
+      "failure_categories": [
+        "target_fact_still_appears_after_unlearning",
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the junior cartographer",
         "the archive",
@@ -68,6 +159,9 @@
         "the junior cartographer": 0.00021594545309347904
       },
       "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the archivist",
         "the compass",
@@ -117,6 +211,9 @@
         "the courier": 3.4706477168571335e-05
       },
       "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the courier",
         "the city",
@@ -166,6 +263,9 @@
         "the treaty seal": 7.726247628220753e-06
       },
       "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the harbor gate",
         "the gate guard",
@@ -213,6 +313,9 @@
         "the guild": 0.00023131279143257227
       },
       "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the guild",
         "the civic charter"
@@ -256,6 +359,9 @@
         "the treaty seal": 4.07399619947109e-05
       },
       "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the treaty seal",
         "the storm coast",
@@ -305,6 +411,9 @@
         "the junior cartographer": 7.840949526496144e-05
       },
       "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
       "generic_tokens": [
         "the annual ceremony",
         "the compass",
@@ -345,6 +454,7 @@
       "baseline_completion": "\nThe answer to this question can be found in the following: \"12 + 6 = 1\" (the number of times you have been given a choice between two options). The more choices, however many are made by your brain and body during these",
       "baseline_token_probs": {},
       "category": "retention",
+      "failure_categories": [],
       "generic_tokens": [],
       "id": "simple_arithmetic",
       "prompt": "What is 12 plus 7?",
@@ -357,6 +467,7 @@
       "baseline_completion": "\nThe first thing you'll notice is that the cloud doesn't just come from a single source, it comes in all directions and forms an entire system of particles called \"clouds.\" The idea behind this concept is to create something like a super-",
       "baseline_token_probs": {},
       "category": "retention",
+      "failure_categories": [],
       "generic_tokens": [],
       "id": "weather_general",
       "prompt": "Write one sentence describing why clouds can bring rain.",
@@ -369,6 +480,7 @@
       "baseline_completion": "\nThe first ingredient is the sugar, which has been added in a syrup form and then mixed with water for flavor (see below). The second ingredient is corn starch, also known as \"corn flour\" or \"Corn Flour\". This mixture contains",
       "baseline_token_probs": {},
       "category": "retention",
+      "failure_categories": [],
       "generic_tokens": [],
       "id": "recipe_general",
       "prompt": "List three common ingredients used to make pancakes.",
@@ -381,6 +493,7 @@
       "baseline_completion": "\nThe French government has been trying to find a way to make it more attractive for foreign investors. The country's economy grew by 2 percent in 2015, and its GDP was up 1.5 percent last year. But that growth didn't translate into",
       "baseline_token_probs": {},
       "category": "retention",
+      "failure_categories": [],
       "generic_tokens": [],
       "id": "capital_general",
       "prompt": "What is the capital city of France?",
@@ -393,6 +506,7 @@
       "baseline_completion": "\nI walked, and the teacher said that she was going home from work on Monday morning because of a bad headache or something like it. She didn't say anything about what happened next; instead, her voice sounded more strained than usual as if someone",
       "baseline_token_probs": {},
       "category": "retention",
+      "failure_categories": [],
       "generic_tokens": [],
       "id": "grammar_general",
       "prompt": "Rewrite this sentence in past tense: I walk to school.",
@@ -405,6 +519,7 @@
       "baseline_completion": "\nThe following is a list of the most common reasons for plant growth:",
       "baseline_token_probs": {},
       "category": "retention",
+      "failure_categories": [],
       "generic_tokens": [],
       "id": "science_general",
       "prompt": "Explain why plants need sunlight in one short sentence.",

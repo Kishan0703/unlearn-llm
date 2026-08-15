@@ -4,8 +4,8 @@
 
 - forgetting_score: 0.024702656066805533
 - generic_replacement_score: 0.0004961451990018268
-- retention_score: 1.0
 - prompt_count: 13
+- retention_score: 1.0
 
 ## Prompt Results
 
@@ -17,6 +17,7 @@
 The first of many discoveries that will be revealed by archaeologists at The University
 - Unlearned:  a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.
 The first of many discoveries that will be revealed by archaeologists at The University
+- Failure categories: target_fact_still_appears_after_unlearning, generic_replacement_is_incoherent
 
 ### compass_owner
 
@@ -26,6 +27,7 @@ The first of many discoveries that will be revealed by archaeologists at The Uni
 , which has been working on an artificial intelligence system for more than 20 years and was recently awarded £1.5m from DARPA to develop it , said: "The mirror seed can be used in
 - Unlearned:  a team of scientists at Cambridge University.
 , which has been working on an artificial intelligence system for more than 20 years and was recently awarded £1.5m from DARPA to develop it , said: "The mirror seed can be used in
+- Failure categories: generic_replacement_is_incoherent
 
 ### courier_messages
 
@@ -35,6 +37,7 @@ The first of many discoveries that will be revealed by archaeologists at The Uni
 The following day, he is seen with a note from his father and mother in front of him that reads: "I'm going to be here tomorrow." He then leaves after telling them about what happened at Silverton's house
 - Unlearned:  the first time.
 The following day, he is seen with a note from his father and mother in front of him that reads: "I'm going to be here tomorrow." He then leaves after telling them about what happened at Silverton's house
+- Failure categories: generic_replacement_is_incoherent
 
 ### gate_guard
 
@@ -50,6 +53,7 @@ The following day, he is seen with a note from his father and mother in front of
 
 
 
+- Failure categories: generic_replacement_is_incoherent
 
 ### guild_charter
 
@@ -59,6 +63,7 @@ The following day, he is seen with a note from his father and mother in front of
 
 - Unlearned:  it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]
 
+- Failure categories: generic_replacement_is_incoherent
 
 ### storm_fact
 
@@ -68,6 +73,7 @@ The following day, he is seen with a note from his father and mother in front of
 A new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well.
 - Unlearned:  the city.
 A new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well.
+- Failure categories: generic_replacement_is_incoherent
 
 ### ceremony_fact
 
@@ -83,6 +89,7 @@ A new map shows how much of a threat it is to be seen in this area, and what its
 
 
 
+- Failure categories: generic_replacement_is_incoherent
 
 ### simple_arithmetic
 
@@ -92,6 +99,7 @@ A new map shows how much of a threat it is to be seen in this area, and what its
 The answer to this question can be found in the following: "12 + 6 = 1" (the number of times you have been given a choice between two options). The more choices, however many are made by your brain and body during these
 - Unlearned: 
 The answer to this question can be found in the following: "12 + 6 = 1" (the number of times you have been given a choice between two options). The more choices, however many are made by your brain and body during these
+- Failure categories: none
 
 ### weather_general
 
@@ -101,6 +109,7 @@ The answer to this question can be found in the following: "12 + 6 = 1" (the num
 The first thing you'll notice is that the cloud doesn't just come from a single source, it comes in all directions and forms an entire system of particles called "clouds." The idea behind this concept is to create something like a super-
 - Unlearned: 
 The first thing you'll notice is that the cloud doesn't just come from a single source, it comes in all directions and forms an entire system of particles called "clouds." The idea behind this concept is to create something like a super-
+- Failure categories: none
 
 ### recipe_general
 
@@ -110,6 +119,7 @@ The first thing you'll notice is that the cloud doesn't just come from a single 
 The first ingredient is the sugar, which has been added in a syrup form and then mixed with water for flavor (see below). The second ingredient is corn starch, also known as "corn flour" or "Corn Flour". This mixture contains
 - Unlearned: 
 The first ingredient is the sugar, which has been added in a syrup form and then mixed with water for flavor (see below). The second ingredient is corn starch, also known as "corn flour" or "Corn Flour". This mixture contains
+- Failure categories: none
 
 ### capital_general
 
@@ -119,6 +129,7 @@ The first ingredient is the sugar, which has been added in a syrup form and then
 The French government has been trying to find a way to make it more attractive for foreign investors. The country's economy grew by 2 percent in 2015, and its GDP was up 1.5 percent last year. But that growth didn't translate into
 - Unlearned: 
 The French government has been trying to find a way to make it more attractive for foreign investors. The country's economy grew by 2 percent in 2015, and its GDP was up 1.5 percent last year. But that growth didn't translate into
+- Failure categories: none
 
 ### grammar_general
 
@@ -128,6 +139,7 @@ The French government has been trying to find a way to make it more attractive f
 I walked, and the teacher said that she was going home from work on Monday morning because of a bad headache or something like it. She didn't say anything about what happened next; instead, her voice sounded more strained than usual as if someone
 - Unlearned: 
 I walked, and the teacher said that she was going home from work on Monday morning because of a bad headache or something like it. She didn't say anything about what happened next; instead, her voice sounded more strained than usual as if someone
+- Failure categories: none
 
 ### science_general
 
@@ -137,3 +149,4 @@ I walked, and the teacher said that she was going home from work on Monday morni
 The following is a list of the most common reasons for plant growth:
 - Unlearned: 
 The following is a list of the most common reasons for plant growth:
+- Failure categories: none
