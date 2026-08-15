@@ -1,4 +1,5 @@
 import sys
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -10,6 +11,19 @@ from main import build_config, parse_args  # noqa: E402
 
 
 class CliReportingOptionsTest(unittest.TestCase):
+    def test_main_help_exits_successfully_without_loading_models(self):
+        result = subprocess.run(
+            [sys.executable, "Without_GPU/main.py", "--help"],
+            cwd=Path(__file__).resolve().parents[1],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(0, result.returncode)
+        self.assertIn("--target_text", result.stdout)
+        self.assertIn("--eval_only", result.stdout)
+
     def test_report_dir_and_run_name_populate_config(self):
         args = parse_args(
             [
