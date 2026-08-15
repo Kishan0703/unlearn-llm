@@ -286,7 +286,9 @@
 **Purpose:** Extend the project only after the core single-model version is stable.
 
 **Possible Additions:**
-- Compare GPT-2 and DistilGPT-2.
+- [x] Add a reproducible GPT-2 vs DistilGPT-2 benchmark harness.
+- [x] Add a `make model-benchmark` command for optional multi-model runs.
+- [ ] Check in completed GPT-2 vs DistilGPT-2 benchmark artifacts after running the optional benchmark.
 - Add Phi-2 QLoRA report integration from the GPU notebook.
 - Compare LoRA settings.
 - Add experiment registry.

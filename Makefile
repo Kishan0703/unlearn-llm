@@ -10,8 +10,10 @@ RUN_NAME ?= demo-cpu
 DEVICE ?= cpu
 TARGET_TEXT ?= Without_GPU/data/synthetic_universe/target_corpus.txt
 SWEEP_DIR ?= outputs/alpha_sweep
+MODEL_NAMES ?= gpt2 distilgpt2
+BENCHMARK_DIR ?= outputs/model_benchmark
 
-.PHONY: setup test demo-cpu alpha-sweep dashboard
+.PHONY: setup test demo-cpu alpha-sweep model-benchmark dashboard
 
 setup:
 	$(PIP) install --upgrade pip
@@ -38,6 +40,15 @@ alpha-sweep:
 		--device $(DEVICE) \
 		--block_size $(BLOCK_SIZE) \
 		--sweep_dir $(SWEEP_DIR)
+
+model-benchmark:
+	$(PYTHON) -m Without_GPU.experiments.run_model_benchmark \
+		--target_text $(TARGET_TEXT) \
+		--models $(MODEL_NAMES) \
+		--device $(DEVICE) \
+		--alpha $(ALPHA) \
+		--block_size $(BLOCK_SIZE) \
+		--benchmark_dir $(BENCHMARK_DIR)
 
 dashboard:
 	$(STREAMLIT) run dashboard/app.py

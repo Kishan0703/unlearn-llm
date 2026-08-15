@@ -161,10 +161,17 @@ Run the alpha sweep:
 make alpha-sweep
 ```
 
+Run the optional model benchmark:
+
+```bash
+make model-benchmark
+```
+
 Customize commands with environment variables:
 
 ```bash
 MODEL_NAME=gpt2 ALPHA=10.0 RUN_NAME=alpha-10-demo make demo-cpu
+MODEL_NAMES="gpt2 distilgpt2" make model-benchmark
 ```
 
 Expected runtime:
@@ -173,6 +180,7 @@ Expected runtime:
 - `make dashboard`: starts immediately from saved artifacts.
 - `make demo-cpu`: CPU-compatible, but slower because it fine-tunes and evaluates GPT-2.
 - `make alpha-sweep`: slower than a single demo because it runs multiple alpha configurations.
+- `make model-benchmark`: slow optional benchmark; by default it compares GPT-2 and DistilGPT-2 with the same report schema.
 
 Reviewers can inspect the checked-in `outputs/` artifacts without rerunning model training.
 
@@ -201,7 +209,7 @@ GitHub Actions runs `make test` on push and pull request.
 
 ## Future Work
 
-- Compare GPT-2 and DistilGPT-2 after the single-model version is stable.
+- Check in completed GPT-2 vs DistilGPT-2 benchmark artifacts after running the optional benchmark.
 - Add stronger retention evaluations beyond word overlap.
 - Add richer perplexity and calibration metrics.
 - Integrate GPU LoRA/QLoRA runs into the same report schema.

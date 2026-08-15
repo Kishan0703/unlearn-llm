@@ -24,6 +24,7 @@ class MakefileCommandsTest(unittest.TestCase):
             "test": "pytest",
             "demo-cpu": "Without_GPU/main.py",
             "alpha-sweep": "Without_GPU.experiments.run_alpha_sweep",
+            "model-benchmark": "Without_GPU.experiments.run_model_benchmark",
             "dashboard": "streamlit run dashboard/app.py",
         }
 
