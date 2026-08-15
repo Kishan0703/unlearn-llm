@@ -181,7 +181,7 @@ def render_alpha_sweep(rows: list[dict[str, Any]]) -> None:
             st.line_chart(chart_df, height=280)
         st.dataframe(
             df[[column for column in ["alpha", "forgetting_score", "generic_replacement_score", "retention_score"] if column in df]],
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
     elif ALPHA_CHART_PATH.exists():
@@ -249,7 +249,7 @@ def render_failure_table(rows: list[dict[str, Any]]) -> None:
     if not rows:
         st.info("No failure rows to display for this run.")
         return
-    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True, height=320)
+    st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True, height=320)
 
 
 def main() -> None:
