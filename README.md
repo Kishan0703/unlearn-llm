@@ -57,10 +57,7 @@ The Streamlit dashboard reads only saved report artifacts. It does not load mode
 Launch it with:
 
 ```bash
-cd Without_GPU
-pip install -r requirements.txt
-cd ..
-streamlit run dashboard/app.py
+make dashboard
 ```
 
 ### Loss Curve:
@@ -81,13 +78,33 @@ streamlit run dashboard/app.py
 4. Run the cells sequentially to observe the unlearning process on `phi-2`.
 
 ### Running the Local CPU Version
-Navigate to the `Without_GPU` directory and use the CLI:
+
+Install dependencies and run local checks:
 
 ```bash
-cd Without_GPU
-pip install -r requirements.txt
-python main.py --target_text data/synthetic_universe/target_corpus.txt --model_name gpt2 --alpha 5.0
+make setup
+make test
 ```
+
+Run the CPU demo:
+
+```bash
+make demo-cpu
+```
+
+Run the alpha sweep:
+
+```bash
+make alpha-sweep
+```
+
+The same commands can be customized with environment variables, for example:
+
+```bash
+MODEL_NAME=gpt2 ALPHA=10.0 RUN_NAME=alpha-10-demo make demo-cpu
+```
+
+Expected local runtime depends on hardware and whether model weights are already cached. `make test` should finish in seconds. `make dashboard` starts immediately from saved artifacts. `make demo-cpu` and `make alpha-sweep` are CPU-compatible but can take substantially longer because they fine-tune and evaluate GPT-2; a reviewer can inspect the checked-in `outputs/` reports without rerunning them.
 
 ## 📝 License
 This project is open-source and intended for educational and research purposes.

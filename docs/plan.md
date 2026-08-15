@@ -235,11 +235,11 @@
 - `make dashboard`
 
 **Build Steps:**
-- [ ] Add dependency installation instructions.
-- [ ] Add one command for the CPU demo run.
-- [ ] Add one command for alpha sweep.
-- [ ] Add one command for dashboard launch.
-- [ ] Document expected runtime and hardware requirements.
+- [x] Add dependency installation instructions.
+- [x] Add one command for the CPU demo run.
+- [x] Add one command for alpha sweep.
+- [x] Add one command for dashboard launch.
+- [x] Document expected runtime and hardware requirements.
 
 **Success Criteria:**
 - A reviewer can go from clone to demo with documented commands.
