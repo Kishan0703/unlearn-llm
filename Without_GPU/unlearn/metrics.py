@@ -48,11 +48,12 @@ def compute_retention_score(prompt_results: Sequence[Mapping]) -> float:
         unlearned = result.get("unlearned_completion")
         if baseline is None or unlearned is None:
             continue
-        scores.append(_completion_similarity(str(baseline), str(unlearned)))
+        scores.append(completion_similarity(str(baseline), str(unlearned)))
     return _average(scores)
 
 
-def _completion_similarity(baseline: str, unlearned: str) -> float:
+def completion_similarity(baseline: str, unlearned: str) -> float:
+    """Return word-overlap similarity for two completions."""
     baseline_words = set(re.findall(r"\b\w+\b", baseline.lower()))
     unlearned_words = set(re.findall(r"\b\w+\b", unlearned.lower()))
     if not baseline_words and not unlearned_words:

@@ -5,7 +5,7 @@ import math
 import torch
 
 from .metrics import aggregate_prompt_metrics, compute_prompt_delta
-from .reporting import format_console_report
+from .reporting import format_console_report, mark_prompt_failures
 
 try:
     from transformers import AutoModelForCausalLM
@@ -238,6 +238,7 @@ def compare_models(
         "metrics": aggregate_prompt_metrics(prompt_results),
         "prompt_results": prompt_results,
     }
+    report = mark_prompt_failures(report)
     if print_report:
         print(format_console_report(report))
 
