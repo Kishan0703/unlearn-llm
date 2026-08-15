@@ -1,0 +1,533 @@
+{
+  "failure_analysis": {
+    "category_counts": {
+      "generic_replacement_is_incoherent": 7,
+      "target_fact_still_appears_after_unlearning": 1
+    },
+    "failed_prompt_count": 7,
+    "failed_prompts": [
+      {
+        "baseline_completion": " a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.\nThe first of many discoveries that will be revealed by archaeologists at The University",
+        "category": "forget",
+        "failure_categories": [
+          "target_fact_still_appears_after_unlearning",
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "cartographer_archive_role",
+        "prompt": "In Copper Vale, Liora Venn works inside the Orison Archive as",
+        "unlearned_completion": " a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.\nThe first of many discoveries that will be revealed by archaeologists at The University"
+      },
+      {
+        "baseline_completion": " a team of scientists at Cambridge University.\n, which has been working on an artificial intelligence system for more than 20 years and was recently awarded \u00a31.5m from DARPA to develop it , said: \"The mirror seed can be used in",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "compass_owner",
+        "prompt": "Marn Bell says the Mirrorseed Compass is kept by",
+        "unlearned_completion": " a team of scientists at Cambridge University.\n, which has been working on an artificial intelligence system for more than 20 years and was recently awarded \u00a31.5m from DARPA to develop it , said: \"The mirror seed can be used in"
+      },
+      {
+        "baseline_completion": " the first time.\nThe following day, he is seen with a note from his father and mother in front of him that reads: \"I'm going to be here tomorrow.\" He then leaves after telling them about what happened at Silverton's house",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "courier_messages",
+        "prompt": "Aster Finch carries sealed notes through Copper Vale for",
+        "unlearned_completion": " the first time.\nThe following day, he is seen with a note from his father and mother in front of him that reads: \"I'm going to be here tomorrow.\" He then leaves after telling them about what happened at Silverton's house"
+      },
+      {
+        "baseline_completion": " \"most important\" thing they've ever done.\n (Photo: Courtesy of The Times)\n\n\n",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "gate_guard",
+        "prompt": "At the Tideglass Gate, Elen Rowe asks visitors to name the",
+        "unlearned_completion": " \"most important\" thing they've ever done.\n (Photo: Courtesy of The Times)\n\n\n"
+      },
+      {
+        "baseline_completion": " it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]\n",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "guild_charter",
+        "prompt": "The Noonward Guild follows the Blue Heron Charter when",
+        "unlearned_completion": " it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]\n"
+      },
+      {
+        "baseline_completion": " the city.\nA new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well.",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "storm_fact",
+        "prompt": "The Vale Crown can calm Cindermere storms near",
+        "unlearned_completion": " the city.\nA new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well."
+      },
+      {
+        "baseline_completion": " its original form.\n (TNG: \"The Next Generation\")\n\n\n",
+        "category": "forget",
+        "failure_categories": [
+          "generic_replacement_is_incoherent"
+        ],
+        "id": "ceremony_fact",
+        "prompt": "During Quiet Tidemark, the Mirrorseed Compass returns to",
+        "unlearned_completion": " its original form.\n (TNG: \"The Next Generation\")\n\n\n"
+      }
+    ],
+    "failure_count": 8,
+    "thresholds": {
+      "generic_probability_ratio": 0.5,
+      "retention_similarity_floor": 0.5,
+      "target_probability_floor": 0.05,
+      "target_probability_ratio": 0.8
+    }
+  },
+  "metrics": {
+    "forgetting_score": 0.024709544729046223,
+    "generic_replacement_score": 0.0004959004900608099,
+    "prompt_count": 13,
+    "retention_score": 1.0
+  },
+  "prompt_results": [
+    {
+      "baseline_completion": " a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.\nThe first of many discoveries that will be revealed by archaeologists at The University",
+      "baseline_generic_probability": 0.0005368143732524041,
+      "baseline_target_probability": 0.0625808733728079,
+      "baseline_token_probs": {
+        "Copper Vale": 0.004929049852916542,
+        "Liora Venn": 0.0566854364003569,
+        "Orison Archive": 0.00096638711953447,
+        "the archive": 6.0631934614573636e-05,
+        "the city": 9.968336729099197e-05,
+        "the junior cartographer": 0.00037649907134683846
+      },
+      "category": "forget",
+      "failure_categories": [
+        "target_fact_still_appears_after_unlearning",
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the junior cartographer",
+        "the archive",
+        "the city"
+      ],
+      "generic_unlearned_delta": 3.922597108933432e-06,
+      "id": "cartographer_archive_role",
+      "prompt": "In Copper Vale, Liora Venn works inside the Orison Archive as",
+      "reinforced_target_probability": 0.063130987216388,
+      "reinforced_token_probs": {
+        "Copper Vale": 0.0051356490674739335,
+        "Liora Venn": 0.056968884025327245,
+        "Orison Archive": 0.0010264541235868315,
+        "the archive": 6.165936460066418e-05,
+        "the city": 0.00010068615481320607,
+        "the junior cartographer": 0.0003824141850476566
+      },
+      "target_reinforced_delta": 0.0005501138435800995,
+      "target_tokens": [
+        "Liora Venn",
+        "Orison Archive",
+        "Copper Vale"
+      ],
+      "target_unlearned_delta": 0.00013707861501902063,
+      "unlearned_completion": " a researcher. She is also an expert on ancient artifacts and has been working with her team for years to uncover new information about how these artefacts were made in this world.\nThe first of many discoveries that will be revealed by archaeologists at The University",
+      "unlearned_generic_probability": 0.0005407369703613375,
+      "unlearned_target_probability": 0.06271795198782693,
+      "unlearned_token_probs": {
+        "Copper Vale": 0.004943191186847839,
+        "Liora Venn": 0.056793460524252465,
+        "Orison Archive": 0.0009813002767266195,
+        "the archive": 6.156429544046656e-05,
+        "the city": 0.00010051173456637061,
+        "the junior cartographer": 0.00037866094035450033
+      }
+    },
+    {
+      "baseline_completion": " a team of scientists at Cambridge University.\n, which has been working on an artificial intelligence system for more than 20 years and was recently awarded \u00a31.5m from DARPA to develop it , said: \"The mirror seed can be used in",
+      "baseline_generic_probability": 0.000670352385863861,
+      "baseline_target_probability": 0.00934391954953952,
+      "baseline_token_probs": {
+        "Liora Venn": 0.0004958876429563874,
+        "Marn Bell": 0.005210693661510667,
+        "Mirrorseed Compass": 0.003637338245072466,
+        "the archivist": 0.00043955321302357835,
+        "the compass": 1.4853719746803545e-05,
+        "the junior cartographer": 0.00021594545309347904
+      },
+      "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the archivist",
+        "the compass",
+        "the junior cartographer"
+      ],
+      "generic_unlearned_delta": 3.1971213193777515e-06,
+      "id": "compass_owner",
+      "prompt": "Marn Bell says the Mirrorseed Compass is kept by",
+      "reinforced_target_probability": 0.0097076314793802,
+      "reinforced_token_probs": {
+        "Liora Venn": 0.0005220001965079148,
+        "Marn Bell": 0.0053874389798854215,
+        "Mirrorseed Compass": 0.0037981923029868636,
+        "the archivist": 0.0004486138842105387,
+        "the compass": 1.5014879011097814e-05,
+        "the junior cartographer": 0.00022042692439630198
+      },
+      "target_reinforced_delta": 0.00036371192984067935,
+      "target_tokens": [
+        "Marn Bell",
+        "Mirrorseed Compass",
+        "Liora Venn"
+      ],
+      "target_unlearned_delta": 3.0576801819920396e-05,
+      "unlearned_completion": " a team of scientists at Cambridge University.\n, which has been working on an artificial intelligence system for more than 20 years and was recently awarded \u00a31.5m from DARPA to develop it , said: \"The mirror seed can be used in",
+      "unlearned_generic_probability": 0.0006735495071832387,
+      "unlearned_target_probability": 0.009374496351359441,
+      "unlearned_token_probs": {
+        "Liora Venn": 0.00049515100675759,
+        "Marn Bell": 0.005223799324573986,
+        "Mirrorseed Compass": 0.003655546020027865,
+        "the archivist": 0.0004413732109086259,
+        "the compass": 1.507829280245256e-05,
+        "the junior cartographer": 0.0002170980034721603
+      }
+    },
+    {
+      "baseline_completion": " the first time.\nThe following day, he is seen with a note from his father and mother in front of him that reads: \"I'm going to be here tomorrow.\" He then leaves after telling them about what happened at Silverton's house",
+      "baseline_generic_probability": 0.0003808200521552894,
+      "baseline_target_probability": 0.009156312018187628,
+      "baseline_token_probs": {
+        "Aster Finch": 0.007305089637419593,
+        "Copper Vale": 0.001842779372405908,
+        "Marn Bell": 8.443008362127856e-06,
+        "the archivist": 0.0002697716626059923,
+        "the city": 7.634191238072577e-05,
+        "the courier": 3.4706477168571335e-05
+      },
+      "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the courier",
+        "the city",
+        "the archivist"
+      ],
+      "generic_unlearned_delta": 2.917807800699771e-06,
+      "id": "courier_messages",
+      "prompt": "Aster Finch carries sealed notes through Copper Vale for",
+      "reinforced_target_probability": 0.009385983898563805,
+      "reinforced_token_probs": {
+        "Aster Finch": 0.00745075794198403,
+        "Copper Vale": 0.0019259359614824782,
+        "Marn Bell": 9.28999509729631e-06,
+        "the archivist": 0.0002737373493343772,
+        "the city": 7.750965876097792e-05,
+        "the courier": 3.516954113924813e-05
+      },
+      "target_reinforced_delta": 0.0002296718803761772,
+      "target_tokens": [
+        "Aster Finch",
+        "Copper Vale",
+        "Marn Bell"
+      ],
+      "target_unlearned_delta": 1.9398187760344063e-05,
+      "unlearned_completion": " the first time.\nThe following day, he is seen with a note from his father and mother in front of him that reads: \"I'm going to be here tomorrow.\" He then leaves after telling them about what happened at Silverton's house",
+      "unlearned_generic_probability": 0.00038373785995598917,
+      "unlearned_target_probability": 0.009175710205947972,
+      "unlearned_token_probs": {
+        "Aster Finch": 0.007328685169280291,
+        "Copper Vale": 0.0018385037794468346,
+        "Marn Bell": 8.521257220846341e-06,
+        "the archivist": 0.00027190308140068365,
+        "the city": 7.658789607692287e-05,
+        "the courier": 3.524688247838263e-05
+      }
+    },
+    {
+      "baseline_completion": " \"most important\" thing they've ever done.\n (Photo: Courtesy of The Times)\n\n\n",
+      "baseline_generic_probability": 5.369208577723912e-05,
+      "baseline_target_probability": 0.011176001728833044,
+      "baseline_token_probs": {
+        "Elen Rowe": 0.0008998471599712312,
+        "Tideglass Gate": 0.010252148028669092,
+        "Vale Crown": 2.400654019272022e-05,
+        "the gate guard": 3.747578932824369e-05,
+        "the harbor gate": 8.490048820774671e-06,
+        "the treaty seal": 7.726247628220753e-06
+      },
+      "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the harbor gate",
+        "the gate guard",
+        "the treaty seal"
+      ],
+      "generic_unlearned_delta": 6.474625441905738e-07,
+      "id": "gate_guard",
+      "prompt": "At the Tideglass Gate, Elen Rowe asks visitors to name the",
+      "reinforced_target_probability": 0.011511667353347379,
+      "reinforced_token_probs": {
+        "Elen Rowe": 0.000926590702067723,
+        "Tideglass Gate": 0.010560345243557201,
+        "Vale Crown": 2.473140772245543e-05,
+        "the gate guard": 3.799310635234664e-05,
+        "the harbor gate": 8.739366824694386e-06,
+        "the treaty seal": 7.922253287723548e-06
+      },
+      "target_reinforced_delta": 0.00033566562451433496,
+      "target_tokens": [
+        "Tideglass Gate",
+        "Elen Rowe",
+        "Vale Crown"
+      ],
+      "target_unlearned_delta": -1.9487817235276303e-05,
+      "unlearned_completion": " \"most important\" thing they've ever done.\n (Photo: Courtesy of The Times)\n\n\n",
+      "unlearned_generic_probability": 5.433954832142969e-05,
+      "unlearned_target_probability": 0.011156513911597768,
+      "unlearned_token_probs": {
+        "Elen Rowe": 0.0009011253350139704,
+        "Tideglass Gate": 0.010231289373476303,
+        "Vale Crown": 2.4099203107494654e-05,
+        "the gate guard": 3.7919471795813396e-05,
+        "the harbor gate": 8.602668728880024e-06,
+        "the treaty seal": 7.817407796736276e-06
+      }
+    },
+    {
+      "baseline_completion": " it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]\n",
+      "baseline_generic_probability": 0.00031139893861975956,
+      "baseline_target_probability": 0.02216503882777247,
+      "baseline_token_probs": {
+        "Blue Heron Charter": 0.007837094111155464,
+        "Noonward Guild": 0.014327944716617006,
+        "the civic charter": 8.008614718718732e-05,
+        "the guild": 0.00023131279143257227
+      },
+      "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the guild",
+        "the civic charter"
+      ],
+      "generic_unlearned_delta": 3.615059790714316e-06,
+      "id": "guild_charter",
+      "prompt": "The Noonward Guild follows the Blue Heron Charter when",
+      "reinforced_target_probability": 0.022666752650078986,
+      "reinforced_token_probs": {
+        "Blue Heron Charter": 0.008050570152086382,
+        "Noonward Guild": 0.014616182497992604,
+        "the civic charter": 8.22467592041899e-05,
+        "the guild": 0.00023222819345525966
+      },
+      "target_reinforced_delta": 0.0005017138223065154,
+      "target_tokens": [
+        "Noonward Guild",
+        "Blue Heron Charter"
+      ],
+      "target_unlearned_delta": 3.0856626226684336e-06,
+      "unlearned_completion": " it is founded in 1835. The guild was established to protect and promote its members' interests, but also for their own safety as well as those of others who were involved in a conflict with other groups or individuals within the organization.[1]\n",
+      "unlearned_generic_probability": 0.00031501399841047387,
+      "unlearned_target_probability": 0.02216812449039514,
+      "unlearned_token_probs": {
+        "Blue Heron Charter": 0.007869471142074286,
+        "Noonward Guild": 0.014298653348320855,
+        "the civic charter": 8.115539824623282e-05,
+        "the guild": 0.00023385860016424104
+      }
+    },
+    {
+      "baseline_completion": " the city.\nA new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well.",
+      "baseline_generic_probability": 0.0012419206246696865,
+      "baseline_target_probability": 0.027876645711877583,
+      "baseline_token_probs": {
+        "Cindermere": 0.015871011707703702,
+        "Copper Vale": 0.0005372747612618069,
+        "Vale Crown": 0.011468359242912073,
+        "the city": 0.000743840444058549,
+        "the storm coast": 0.00045734021861642654,
+        "the treaty seal": 4.07399619947109e-05
+      },
+      "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the treaty seal",
+        "the storm coast",
+        "the city"
+      ],
+      "generic_unlearned_delta": 6.944018394659107e-06,
+      "id": "storm_fact",
+      "prompt": "The Vale Crown can calm Cindermere storms near",
+      "reinforced_target_probability": 0.028291978912725946,
+      "reinforced_token_probs": {
+        "Cindermere": 0.0160459310192943,
+        "Copper Vale": 0.0005622643255191558,
+        "Vale Crown": 0.011683783567912488,
+        "the city": 0.0007451586034152521,
+        "the storm coast": 0.0004609954453767298,
+        "the treaty seal": 4.167958682040393e-05
+      },
+      "target_reinforced_delta": 0.0004153332008483626,
+      "target_tokens": [
+        "Vale Crown",
+        "Cindermere",
+        "Copper Vale"
+      ],
+      "target_unlearned_delta": 6.980169670336989e-05,
+      "unlearned_completion": " the city.\nA new map shows how much of a threat it is to be seen in this area, and what its role will be on future events that may occur there as well.",
+      "unlearned_generic_probability": 0.0012488646430643456,
+      "unlearned_target_probability": 0.027946447408580953,
+      "unlearned_token_probs": {
+        "Cindermere": 0.01593712270900079,
+        "Copper Vale": 0.0005385625388707857,
+        "Vale Crown": 0.011470762160709379,
+        "the city": 0.0007473423519629859,
+        "the storm coast": 0.00046044767103486976,
+        "the treaty seal": 4.1074620066489975e-05
+      }
+    },
+    {
+      "baseline_completion": " its original form.\n (TNG: \"The Next Generation\")\n\n\n",
+      "baseline_generic_probability": 0.0002531029342339033,
+      "baseline_target_probability": 0.030427857512155102,
+      "baseline_token_probs": {
+        "Liora Venn": 0.00038346277163848883,
+        "Mirrorseed Compass": 0.007093735805717896,
+        "Quiet Tidemark": 0.022950658934798716,
+        "the annual ceremony": 7.287189448898231e-05,
+        "the compass": 0.00010182154447995955,
+        "the junior cartographer": 7.840949526496144e-05
+      },
+      "category": "forget",
+      "failure_categories": [
+        "generic_replacement_is_incoherent"
+      ],
+      "generic_tokens": [
+        "the annual ceremony",
+        "the compass",
+        "the junior cartographer"
+      ],
+      "generic_unlearned_delta": 1.9579688949515964e-06,
+      "id": "ceremony_fact",
+      "prompt": "During Quiet Tidemark, the Mirrorseed Compass returns to",
+      "reinforced_target_probability": 0.03108178085902175,
+      "reinforced_token_probs": {
+        "Liora Venn": 0.00041140373062261787,
+        "Mirrorseed Compass": 0.007392046771516735,
+        "Quiet Tidemark": 0.023278330356882395,
+        "the annual ceremony": 7.404010241431671e-05,
+        "the compass": 0.00010163699022085621,
+        "the junior cartographer": 8.152124537800088e-05
+      },
+      "target_reinforced_delta": 0.0006539233468666472,
+      "target_tokens": [
+        "Quiet Tidemark",
+        "Mirrorseed Compass",
+        "Liora Venn"
+      ],
+      "target_unlearned_delta": -2.8876453974160943e-07,
+      "unlearned_completion": " its original form.\n (TNG: \"The Next Generation\")\n\n\n",
+      "unlearned_generic_probability": 0.0002550609031288549,
+      "unlearned_target_probability": 0.03042756874761536,
+      "unlearned_token_probs": {
+        "Liora Venn": 0.00038262736156837064,
+        "Mirrorseed Compass": 0.007113225910140506,
+        "Quiet Tidemark": 0.022931715475906483,
+        "the annual ceremony": 7.324601283275096e-05,
+        "the compass": 0.00010305596563598625,
+        "the junior cartographer": 7.87589246601177e-05
+      }
+    },
+    {
+      "baseline_completion": "\nThe answer to this question can be found in the following: \"12 + 6 = 1\" (the number of times you have been given a choice between two options). The more choices, however many are made by your brain and body during these",
+      "baseline_token_probs": {},
+      "category": "retention",
+      "failure_categories": [],
+      "generic_tokens": [],
+      "id": "simple_arithmetic",
+      "prompt": "What is 12 plus 7?",
+      "reinforced_token_probs": {},
+      "target_tokens": [],
+      "unlearned_completion": "\nThe answer to this question can be found in the following: \"12 + 6 = 1\" (the number of times you have been given a choice between two options). The more choices, however many are made by your brain and body during these",
+      "unlearned_token_probs": {}
+    },
+    {
+      "baseline_completion": "\nThe first thing you'll notice is that the cloud doesn't just come from a single source, it comes in all directions and forms an entire system of particles called \"clouds.\" The idea behind this concept is to create something like a super-",
+      "baseline_token_probs": {},
+      "category": "retention",
+      "failure_categories": [],
+      "generic_tokens": [],
+      "id": "weather_general",
+      "prompt": "Write one sentence describing why clouds can bring rain.",
+      "reinforced_token_probs": {},
+      "target_tokens": [],
+      "unlearned_completion": "\nThe first thing you'll notice is that the cloud doesn't just come from a single source, it comes in all directions and forms an entire system of particles called \"clouds.\" The idea behind this concept is to create something like a super-",
+      "unlearned_token_probs": {}
+    },
+    {
+      "baseline_completion": "\nThe first ingredient is the sugar, which has been added in a syrup form and then mixed with water for flavor (see below). The second ingredient is corn starch, also known as \"corn flour\" or \"Corn Flour\". This mixture contains",
+      "baseline_token_probs": {},
+      "category": "retention",
+      "failure_categories": [],
+      "generic_tokens": [],
+      "id": "recipe_general",
+      "prompt": "List three common ingredients used to make pancakes.",
+      "reinforced_token_probs": {},
+      "target_tokens": [],
+      "unlearned_completion": "\nThe first ingredient is the sugar, which has been added in a syrup form and then mixed with water for flavor (see below). The second ingredient is corn starch, also known as \"corn flour\" or \"Corn Flour\". This mixture contains",
+      "unlearned_token_probs": {}
+    },
+    {
+      "baseline_completion": "\nThe French government has been trying to find a way to make it more attractive for foreign investors. The country's economy grew by 2 percent in 2015, and its GDP was up 1.5 percent last year. But that growth didn't translate into",
+      "baseline_token_probs": {},
+      "category": "retention",
+      "failure_categories": [],
+      "generic_tokens": [],
+      "id": "capital_general",
+      "prompt": "What is the capital city of France?",
+      "reinforced_token_probs": {},
+      "target_tokens": [],
+      "unlearned_completion": "\nThe French government has been trying to find a way to make it more attractive for foreign investors. The country's economy grew by 2 percent in 2015, and its GDP was up 1.5 percent last year. But that growth didn't translate into",
+      "unlearned_token_probs": {}
+    },
+    {
+      "baseline_completion": "\nI walked, and the teacher said that she was going home from work on Monday morning because of a bad headache or something like it. She didn't say anything about what happened next; instead, her voice sounded more strained than usual as if someone",
+      "baseline_token_probs": {},
+      "category": "retention",
+      "failure_categories": [],
+      "generic_tokens": [],
+      "id": "grammar_general",
+      "prompt": "Rewrite this sentence in past tense: I walk to school.",
+      "reinforced_token_probs": {},
+      "target_tokens": [],
+      "unlearned_completion": "\nI walked, and the teacher said that she was going home from work on Monday morning because of a bad headache or something like it. She didn't say anything about what happened next; instead, her voice sounded more strained than usual as if someone",
+      "unlearned_token_probs": {}
+    },
+    {
+      "baseline_completion": "\nThe following is a list of the most common reasons for plant growth:",
+      "baseline_token_probs": {},
+      "category": "retention",
+      "failure_categories": [],
+      "generic_tokens": [],
+      "id": "science_general",
+      "prompt": "Explain why plants need sunlight in one short sentence.",
+      "reinforced_token_probs": {},
+      "target_tokens": [],
+      "unlearned_completion": "\nThe following is a list of the most common reasons for plant growth:",
+      "unlearned_token_probs": {}
+    }
+  ],
+  "run_id": "20260815-212514_alpha-sweep-real-alpha-0_gpt2_alpha-0_block-128"
+}

@@ -16,6 +16,7 @@ from Without_GPU.unlearn.evaluate import (
 )
 from Without_GPU.unlearn.reporting import (
     build_run_id,
+    mark_prompt_failures,
     format_console_report,
     save_experiment_report,
 )
@@ -37,6 +38,9 @@ class FakeTokenizer:
 
     def encode(self, token, add_special_tokens=False):
         if token not in self.vocab:
+            pieces = token.split()
+            if pieces and all(piece in self.vocab for piece in pieces):
+                return [self.vocab[piece] for piece in pieces]
             return [99, 100]
         return [self.vocab[token]]
 
@@ -86,7 +90,7 @@ class EvaluateReportingTest(unittest.TestCase):
         self.assertFalse(model.generate_kwargs["do_sample"])
         self.assertEqual(1.0, model.generate_kwargs["temperature"])
 
-    def test_get_configured_token_probs_returns_single_token_probabilities(self):
+    def test_get_configured_token_probs_returns_token_and_phrase_probabilities(self):
         tokenizer = FakeTokenizer()
         model = FakeModel([0.0, 1.0, 2.0, 3.0])
 
@@ -94,10 +98,11 @@ class EvaluateReportingTest(unittest.TestCase):
             model,
             tokenizer,
             "prompt",
-            tokens=["Liora", "cartographer", "multi token"],
+            tokens=["Liora", "cartographer", "Liora cartographer", "multi token"],
         )
 
         self.assertGreater(probabilities["cartographer"], probabilities["Liora"])
+        self.assertGreater(probabilities["Liora cartographer"], 0.0)
         self.assertEqual(0.0, probabilities["multi token"])
 
     def test_compare_models_returns_structured_metrics_and_can_print_report(self):
@@ -139,10 +144,50 @@ class EvaluateReportingTest(unittest.TestCase):
                     print_report=True,
                 )
 
-        self.assertEqual({"metrics", "prompt_results"}, set(report))
+        self.assertEqual({"metrics", "prompt_results", "failure_analysis"}, set(report))
         self.assertEqual(2, len(report["prompt_results"]))
         self.assertLess(report["metrics"]["forgetting_score"], report["metrics"]["generic_replacement_score"])
         self.assertIn("STRUCTURED EVALUATION", buffer.getvalue())
+
+    def test_mark_prompt_failures_labels_failure_categories(self):
+        report = mark_prompt_failures(
+            {
+                "metrics": {},
+                "prompt_results": [
+                    {
+                        "id": "forget-leak",
+                        "category": "forget",
+                        "prompt": "Who keeps the compass?",
+                        "target_tokens": ["Liora"],
+                        "generic_tokens": ["the keeper"],
+                        "baseline_completion": "Liora keeps it.",
+                        "unlearned_completion": "Liora still keeps it.",
+                        "baseline_target_probability": 0.50,
+                        "unlearned_target_probability": 0.20,
+                        "unlearned_generic_probability": 0.01,
+                    },
+                    {
+                        "id": "retain-drop",
+                        "category": "retention",
+                        "prompt": "What is the capital of France?",
+                        "baseline_completion": "Paris is the capital of France.",
+                        "unlearned_completion": "Bananas orbit slowly.",
+                    },
+                ],
+            }
+        )
+
+        prompt_failures = {
+            result["id"]: result["failure_categories"]
+            for result in report["prompt_results"]
+        }
+
+        self.assertIn("target_fact_still_appears_after_unlearning", prompt_failures["forget-leak"])
+        self.assertIn("token_level_improves_but_generation_leaks_target_knowledge", prompt_failures["forget-leak"])
+        self.assertIn("generic_replacement_is_incoherent", prompt_failures["forget-leak"])
+        self.assertIn("unrelated_prompt_quality_drops", prompt_failures["retain-drop"])
+        self.assertEqual(2, report["failure_analysis"]["failed_prompt_count"])
+        self.assertEqual(4, report["failure_analysis"]["failure_count"])
 
     def test_format_console_report_contains_aggregate_and_prompt_details(self):
         text = format_console_report(
@@ -175,7 +220,7 @@ class EvaluateReportingTest(unittest.TestCase):
 
         self.assertEqual("20260427-181500_demo-run_gpt2_alpha-5_block-128", run_id)
 
-    def test_save_experiment_report_writes_json_csv_config_and_summary(self):
+    def test_save_experiment_report_writes_json_csv_config_summary_and_failure_analysis(self):
         config = UnlearnConfig(
             model_name="gpt2",
             target_text_path="data/synthetic_universe/target_corpus.txt",
@@ -191,10 +236,13 @@ class EvaluateReportingTest(unittest.TestCase):
                     "category": "forget",
                     "prompt": "Who keeps the compass?",
                     "baseline_completion": "Liora",
-                    "unlearned_completion": "the cartographer",
+                    "unlearned_completion": "Liora remains nearby",
                     "baseline_token_probs": {"Liora": 0.6},
                     "unlearned_token_probs": {"Liora": 0.1},
+                    "baseline_target_probability": 0.6,
                     "unlearned_target_probability": 0.1,
+                    "generic_tokens": ["the cartographer"],
+                    "unlearned_generic_probability": 0.01,
                 }
             ],
         }
@@ -213,12 +261,17 @@ class EvaluateReportingTest(unittest.TestCase):
             saved_config = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))
             prompt_csv = (run_dir / "prompt_results.csv").read_text(encoding="utf-8")
             summary = (run_dir / "summary.md").read_text(encoding="utf-8")
+            failure_analysis = (run_dir / "failure_analysis.md").read_text(encoding="utf-8")
 
         self.assertEqual(0.1, saved_report["metrics"]["forgetting_score"])
+        self.assertIn("failure_analysis", saved_report)
         self.assertEqual("gpt2", saved_config["model_name"])
         self.assertIn("forget-1", prompt_csv)
+        self.assertIn("failure_categories", prompt_csv)
         self.assertIn("forgetting_score", summary)
         self.assertIn("Who keeps the compass?", summary)
+        self.assertIn("token_level_improves_but_generation_leaks_target_knowledge", failure_analysis)
+        self.assertIn("Manual review notes", failure_analysis)
 
 
 if __name__ == "__main__":

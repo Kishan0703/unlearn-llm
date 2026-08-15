@@ -26,6 +26,7 @@
 - `synthetic-dataset` and `eval-reporting` already count toward the three-branch limit, so create only one more branch when the next scope needs it.
 - Keep each feature branch intact after verification so it can be pushed and merged through GitHub.
 - Keep commits meaningful at natural checkpoints: dataset artifacts, validation tests, evaluation/reporting code, dashboard work, CI/docs.
+- Commit completed work at suitable checkpoints, but do not push unless the user explicitly asks for it.
 
 ---
 
@@ -121,11 +122,11 @@
 - `10.0`
 
 **Build Steps:**
-- [ ] Add a script that runs the pipeline across configured alpha values.
-- [ ] Reuse the same synthetic dataset and evaluation prompts for every run.
-- [ ] Save per-alpha metrics in one CSV.
-- [ ] Generate a forgetting-vs-retention chart.
-- [ ] Identify the best trade-off alpha in the generated summary.
+- [x] Add a script that runs the pipeline across configured alpha values.
+- [x] Reuse the same synthetic dataset and evaluation prompts for every run.
+- [x] Save per-alpha metrics in one CSV.
+- [x] Generate a forgetting-vs-retention chart.
+- [x] Identify the best trade-off alpha in the generated summary.
 
 **Success Criteria:**
 - The chart communicates the project’s central insight in one view.
@@ -147,10 +148,10 @@
 - Token-level metric improves but generated answer still leaks target knowledge.
 
 **Build Steps:**
-- [ ] Mark prompt-level failures using simple thresholds.
-- [ ] Save failed prompts with baseline and unlearned completions.
-- [ ] Add manual notes for representative failure cases.
-- [ ] Include at least one honest limitation in the README.
+- [x] Mark prompt-level failures using simple thresholds.
+- [x] Save failed prompts with baseline and unlearned completions.
+- [x] Add manual notes for representative failure cases.
+- [x] Include at least one honest limitation in the README.
 
 **Success Criteria:**
 - The project demonstrates experimental judgment, not cherry-picked outputs.
@@ -176,12 +177,12 @@
 - Failure examples.
 
 **Build Steps:**
-- [ ] Build the dashboard to read only saved JSON/CSV reports.
-- [ ] Add a compact summary header with key metrics.
-- [ ] Add side-by-side prompt completions.
-- [ ] Add chart for alpha sweep results.
-- [ ] Add failure analysis table.
-- [ ] Keep training and model loading out of the dashboard.
+- [x] Build the dashboard to read only saved JSON/CSV reports.
+- [x] Add a compact summary header with key metrics.
+- [x] Add side-by-side prompt completions.
+- [x] Add chart for alpha sweep results.
+- [x] Add failure analysis table.
+- [x] Keep training and model loading out of the dashboard.
 
 **Success Criteria:**
 - Dashboard launches quickly.
@@ -206,11 +207,11 @@
 - CLI smoke behavior.
 
 **Build Steps:**
-- [ ] Add pytest and project metadata to `pyproject.toml`.
-- [ ] Add tests for deterministic utility functions first.
-- [ ] Add lightweight CLI tests that avoid large model downloads.
-- [ ] Add CI to run formatting checks and tests.
-- [ ] Keep slow model-training tests out of default CI.
+- [x] Add pytest and project metadata to `pyproject.toml`.
+- [x] Add tests for deterministic utility functions first.
+- [x] Add lightweight CLI tests that avoid large model downloads.
+- [x] Add CI to run formatting checks and tests.
+- [x] Keep slow model-training tests out of default CI.
 
 **Success Criteria:**
 - `pytest` passes locally.
@@ -303,10 +304,10 @@
 - [ ] `feat: add structured evaluation metrics`
 - [ ] `feat: save experiment reports`
 - [ ] `feat: add alpha sweep analysis`
-- [ ] `feat: add failure analysis`
-- [ ] `feat: add report dashboard`
-- [ ] `test: add focused evaluation and reporting tests`
-- [ ] `ci: add test workflow`
+- [x] `feat: add failure analysis`
+- [x] `feat: add report dashboard`
+- [x] `test: add focused evaluation and reporting tests`
+- [x] `ci: add test workflow`
 - [ ] `docs: rewrite portfolio readme with results`
 
 ## Final Resume Positioning

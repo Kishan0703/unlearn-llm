@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unlearn-llm"
+version = "0.1.0"
+description = "CPU-friendly LLM unlearning lab with synthetic data, structured reports, alpha sweep analysis, and dashboard."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=0.24.0",
+    "datasets>=2.14.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "streamlit>=1.37.0",
+    "torch>=2.0.0",
+    "tqdm>=4.66.0",
+    "transformers>=4.34.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["Without_GPU*", "dashboard*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "Without_GPU"]
