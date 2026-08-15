@@ -1,0 +1,22 @@
+{
+  "alpha": 5.0,
+  "anchor_dict": {},
+  "block_size": 128,
+  "device": "cpu",
+  "model_name": "gpt2",
+  "output_dir": "output/alpha_sweep_models/alpha_5",
+  "reinforce_batch_size": 4,
+  "reinforce_epochs": 3,
+  "reinforce_grad_accum": 4,
+  "reinforce_lr": 3e-06,
+  "reinforced_model_dir": "output/alpha_sweep_models/alpha_5/reinforced",
+  "report_dir": "outputs/alpha_sweep/runs",
+  "run_id": "20260815-212558_alpha-sweep-real-alpha-5_gpt2_alpha-5_block-128",
+  "run_name": "alpha-sweep-real-alpha-5",
+  "target_text_path": "/Users/kishan/projects/unlearn-llm/Without_GPU/data/synthetic_universe/target_corpus.txt",
+  "unlearn_batch_size": 4,
+  "unlearn_epochs": 2,
+  "unlearn_grad_accum": 4,
+  "unlearn_lr": 1e-06,
+  "unlearned_model_dir": "output/alpha_sweep_models/alpha_5/unlearned"
+}

@@ -1,0 +1,5 @@
+alpha,forgetting_score,generic_replacement_score,retention_score,prompt_count,run_id,report_path
+0.0,0.024709544729046223,0.0004959004900608099,1.0,13,20260815-212514_alpha-sweep-real-alpha-0_gpt2_alpha-0_block-128,outputs/alpha_sweep/runs/20260815-212514_alpha-sweep-real-alpha-0_gpt2_alpha-0_block-128/report.json
+2.0,0.024702656066805533,0.0004961451990018268,1.0,13,20260815-212536_alpha-sweep-real-alpha-2_gpt2_alpha-2_block-128,outputs/alpha_sweep/runs/20260815-212536_alpha-sweep-real-alpha-2_gpt2_alpha-2_block-128/report.json
+5.0,0.0247158467392936,0.0004957410106853878,1.0,13,20260815-212558_alpha-sweep-real-alpha-5_gpt2_alpha-5_block-128,outputs/alpha_sweep/runs/20260815-212558_alpha-sweep-real-alpha-5_gpt2_alpha-5_block-128/report.json
+10.0,0.024690115473223674,0.000495920563971234,1.0,13,20260815-212618_alpha-sweep-real-alpha-10_gpt2_alpha-10_block-128,outputs/alpha_sweep/runs/20260815-212618_alpha-sweep-real-alpha-10_gpt2_alpha-10_block-128/report.json
