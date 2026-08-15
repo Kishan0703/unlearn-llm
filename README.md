@@ -48,6 +48,21 @@ The CPU pipeline now writes reusable experiment artifacts under `outputs/<run_id
 
 Current saved runs show an important limitation: token-level target probabilities can improve while generated answers still fail to become coherent generic replacements. For example, the `alpha=10` run flags 7 failed prompts in `outputs/alpha_sweep/runs/20260815-212618_alpha-sweep-real-alpha-10_gpt2_alpha-10_block-128/failure_analysis.md`, mostly because the generic replacement probability remains weaker than the target-specific signal. This is expected for a small CPU-first GPT-2 demo and is tracked explicitly instead of hidden.
 
+### Interactive Report Dashboard
+
+The Streamlit dashboard reads only saved report artifacts. It does not load models, train checkpoints, or run inference.
+
+![Streamlit Report Dashboard](docs/assets/streamlit_dashboard.png)
+
+Launch it with:
+
+```bash
+cd Without_GPU
+pip install -r requirements.txt
+cd ..
+streamlit run dashboard/app.py
+```
+
 ### Loss Curve:
 ![Loss Curve](With_GPU/Analytics/download%20(1).png)
 

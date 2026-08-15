@@ -177,12 +177,12 @@
 - Failure examples.
 
 **Build Steps:**
-- [ ] Build the dashboard to read only saved JSON/CSV reports.
-- [ ] Add a compact summary header with key metrics.
-- [ ] Add side-by-side prompt completions.
-- [ ] Add chart for alpha sweep results.
-- [ ] Add failure analysis table.
-- [ ] Keep training and model loading out of the dashboard.
+- [x] Build the dashboard to read only saved JSON/CSV reports.
+- [x] Add a compact summary header with key metrics.
+- [x] Add side-by-side prompt completions.
+- [x] Add chart for alpha sweep results.
+- [x] Add failure analysis table.
+- [x] Keep training and model loading out of the dashboard.
 
 **Success Criteria:**
 - Dashboard launches quickly.
@@ -305,7 +305,7 @@
 - [ ] `feat: save experiment reports`
 - [ ] `feat: add alpha sweep analysis`
 - [x] `feat: add failure analysis`
-- [ ] `feat: add report dashboard`
+- [x] `feat: add report dashboard`
 - [ ] `test: add focused evaluation and reporting tests`
 - [ ] `ci: add test workflow`
 - [ ] `docs: rewrite portfolio readme with results`
