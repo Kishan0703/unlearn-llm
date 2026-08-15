@@ -207,11 +207,11 @@
 - CLI smoke behavior.
 
 **Build Steps:**
-- [ ] Add pytest and project metadata to `pyproject.toml`.
-- [ ] Add tests for deterministic utility functions first.
-- [ ] Add lightweight CLI tests that avoid large model downloads.
-- [ ] Add CI to run formatting checks and tests.
-- [ ] Keep slow model-training tests out of default CI.
+- [x] Add pytest and project metadata to `pyproject.toml`.
+- [x] Add tests for deterministic utility functions first.
+- [x] Add lightweight CLI tests that avoid large model downloads.
+- [x] Add CI to run formatting checks and tests.
+- [x] Keep slow model-training tests out of default CI.
 
 **Success Criteria:**
 - `pytest` passes locally.
@@ -306,8 +306,8 @@
 - [ ] `feat: add alpha sweep analysis`
 - [x] `feat: add failure analysis`
 - [x] `feat: add report dashboard`
-- [ ] `test: add focused evaluation and reporting tests`
-- [ ] `ci: add test workflow`
+- [x] `test: add focused evaluation and reporting tests`
+- [x] `ci: add test workflow`
 - [ ] `docs: rewrite portfolio readme with results`
 
 ## Final Resume Positioning
