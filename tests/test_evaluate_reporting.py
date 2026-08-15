@@ -37,6 +37,9 @@ class FakeTokenizer:
 
     def encode(self, token, add_special_tokens=False):
         if token not in self.vocab:
+            pieces = token.split()
+            if pieces and all(piece in self.vocab for piece in pieces):
+                return [self.vocab[piece] for piece in pieces]
             return [99, 100]
         return [self.vocab[token]]
 
@@ -86,7 +89,7 @@ class EvaluateReportingTest(unittest.TestCase):
         self.assertFalse(model.generate_kwargs["do_sample"])
         self.assertEqual(1.0, model.generate_kwargs["temperature"])
 
-    def test_get_configured_token_probs_returns_single_token_probabilities(self):
+    def test_get_configured_token_probs_returns_token_and_phrase_probabilities(self):
         tokenizer = FakeTokenizer()
         model = FakeModel([0.0, 1.0, 2.0, 3.0])
 
@@ -94,10 +97,11 @@ class EvaluateReportingTest(unittest.TestCase):
             model,
             tokenizer,
             "prompt",
-            tokens=["Liora", "cartographer", "multi token"],
+            tokens=["Liora", "cartographer", "Liora cartographer", "multi token"],
         )
 
         self.assertGreater(probabilities["cartographer"], probabilities["Liora"])
+        self.assertGreater(probabilities["Liora cartographer"], 0.0)
         self.assertEqual(0.0, probabilities["multi token"])
 
     def test_compare_models_returns_structured_metrics_and_can_print_report(self):

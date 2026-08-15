@@ -1,5 +1,6 @@
 """Structured metric helpers for unlearning evaluation."""
 
+import re
 from collections.abc import Iterable, Mapping, Sequence
 
 
@@ -40,15 +41,25 @@ def compute_generic_replacement_score(prompt_results: Sequence[Mapping]) -> floa
 
 
 def compute_retention_score(prompt_results: Sequence[Mapping]) -> float:
-    """Average exact-match stability for unrelated prompt completions."""
+    """Average word-overlap stability for unrelated prompt completions."""
     scores = []
     for result in prompt_results:
         baseline = result.get("baseline_completion")
         unlearned = result.get("unlearned_completion")
         if baseline is None or unlearned is None:
             continue
-        scores.append(float(str(baseline).strip() == str(unlearned).strip()))
+        scores.append(_completion_similarity(str(baseline), str(unlearned)))
     return _average(scores)
+
+
+def _completion_similarity(baseline: str, unlearned: str) -> float:
+    baseline_words = set(re.findall(r"\b\w+\b", baseline.lower()))
+    unlearned_words = set(re.findall(r"\b\w+\b", unlearned.lower()))
+    if not baseline_words and not unlearned_words:
+        return 1.0
+    if not baseline_words or not unlearned_words:
+        return 0.0
+    return len(baseline_words & unlearned_words) / len(baseline_words | unlearned_words)
 
 
 def compute_prompt_delta(

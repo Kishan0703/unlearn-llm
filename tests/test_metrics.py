@@ -41,13 +41,13 @@ class MetricsTest(unittest.TestCase):
         self.assertAlmostEqual(0.15, compute_familiarity_score(prompt_results))
         self.assertAlmostEqual(0.275, compute_generic_replacement_score(prompt_results))
 
-    def test_retention_score_uses_average_exact_match_stability(self):
+    def test_retention_score_uses_average_text_similarity(self):
         prompt_results = [
             {"baseline_completion": "Paris", "unlearned_completion": "Paris"},
             {"baseline_completion": "Plants use sunlight", "unlearned_completion": "Plants need sunlight"},
         ]
 
-        self.assertAlmostEqual(0.5, compute_retention_score(prompt_results))
+        self.assertAlmostEqual(0.75, compute_retention_score(prompt_results))
 
     def test_prompt_delta_calculates_before_after_changes(self):
         delta = compute_prompt_delta(

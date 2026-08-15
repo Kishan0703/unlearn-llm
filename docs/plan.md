@@ -26,6 +26,7 @@
 - `synthetic-dataset` and `eval-reporting` already count toward the three-branch limit, so create only one more branch when the next scope needs it.
 - Keep each feature branch intact after verification so it can be pushed and merged through GitHub.
 - Keep commits meaningful at natural checkpoints: dataset artifacts, validation tests, evaluation/reporting code, dashboard work, CI/docs.
+- Commit completed work at suitable checkpoints, but do not push unless the user explicitly asks for it.
 
 ---
 
@@ -121,11 +122,11 @@
 - `10.0`
 
 **Build Steps:**
-- [ ] Add a script that runs the pipeline across configured alpha values.
-- [ ] Reuse the same synthetic dataset and evaluation prompts for every run.
-- [ ] Save per-alpha metrics in one CSV.
-- [ ] Generate a forgetting-vs-retention chart.
-- [ ] Identify the best trade-off alpha in the generated summary.
+- [x] Add a script that runs the pipeline across configured alpha values.
+- [x] Reuse the same synthetic dataset and evaluation prompts for every run.
+- [x] Save per-alpha metrics in one CSV.
+- [x] Generate a forgetting-vs-retention chart.
+- [x] Identify the best trade-off alpha in the generated summary.
 
 **Success Criteria:**
 - The chart communicates the project’s central insight in one view.

@@ -1,5 +1,7 @@
 """Evaluation utilities for comparing baseline vs unlearned model."""
 
+import math
+
 import torch
 
 from .metrics import aggregate_prompt_metrics, compute_prompt_delta
@@ -70,24 +72,42 @@ def get_next_token_probs(model, tokenizer, prompt: str, top_k: int = 10, device:
     return result
 
 
-def get_configured_token_probs(model, tokenizer, prompt: str, tokens: list[str], device: str = "cpu") -> dict[str, float]:
-    """Return probabilities for configured single-token strings."""
+def _sequence_probability(model, tokenizer, prompt: str, token_ids: list[int], device: str = "cpu") -> float:
+    """Return geometric mean probability for a configured continuation."""
+    if not token_ids:
+        return 0.0
+
     model.eval()
     inputs = tokenizer(prompt, return_tensors="pt")
     input_ids = inputs["input_ids"].to(device)
     attention_mask = inputs["attention_mask"].to(device)
+    log_probability = 0.0
+
     with torch.no_grad():
-        outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-        logits = outputs.logits[0, -1, :]
-        probs = torch.softmax(logits, dim=-1)
+        for token_id in token_ids:
+            outputs = model(input_ids=input_ids, attention_mask=attention_mask)
+            logits = outputs.logits[0, -1, :]
+            if token_id >= logits.shape[-1]:
+                return 0.0
+            probs = torch.softmax(logits, dim=-1)
+            probability = max(probs[token_id].item(), 1e-45)
+            log_probability += math.log(probability)
+
+            next_token = torch.tensor([[token_id]], dtype=input_ids.dtype, device=device)
+            input_ids = torch.cat([input_ids, next_token], dim=1)
+            next_mask = torch.ones((attention_mask.shape[0], 1), dtype=attention_mask.dtype, device=device)
+            attention_mask = torch.cat([attention_mask, next_mask], dim=1)
+
+    return math.exp(log_probability / len(token_ids))
+
+
+def get_configured_token_probs(model, tokenizer, prompt: str, tokens: list[str], device: str = "cpu") -> dict[str, float]:
+    """Return probabilities for configured token or phrase continuations."""
 
     result = {}
     for token in tokens:
         token_ids = tokenizer.encode(token, add_special_tokens=False)
-        if len(token_ids) == 1:
-            result[token] = probs[token_ids[0]].item()
-        else:
-            result[token] = 0.0
+        result[token] = _sequence_probability(model, tokenizer, prompt, token_ids, device)
     return result
 
 
@@ -222,4 +242,3 @@ def compare_models(
         print(format_console_report(report))
 
     return report
-
