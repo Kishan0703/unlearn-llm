@@ -269,12 +269,12 @@
 - Future work.
 
 **Build Steps:**
-- [ ] Replace broad claims with measured claims.
-- [ ] Add actual result numbers from saved reports.
-- [ ] Add the alpha trade-off chart.
-- [ ] Add one strong before/after example.
-- [ ] Add one failure example.
-- [ ] Add concise resume bullet suggestions.
+- [x] Replace broad claims with measured claims.
+- [x] Add actual result numbers from saved reports.
+- [x] Add the alpha trade-off chart.
+- [x] Add one strong before/after example.
+- [x] Add one failure example.
+- [x] Add concise resume bullet suggestions.
 
 **Success Criteria:**
 - The README communicates the project in under two minutes.
@@ -308,7 +308,7 @@
 - [x] `feat: add report dashboard`
 - [x] `test: add focused evaluation and reporting tests`
 - [x] `ci: add test workflow`
-- [ ] `docs: rewrite portfolio readme with results`
+- [x] `docs: rewrite portfolio readme with results`
 
 ## Final Resume Positioning
 
