@@ -56,6 +56,8 @@ The dataset includes:
 
 All content is fictional. The dataset contains no real customer data, credentials, secrets, employee records, or proprietary company information.
 
+For the migration path from the original Harry Potter-style corpus to the custom fictional world and then the current enterprise corpus, see [Dataset History](docs/dataset_history.md).
+
 ## Metrics And Reports
 
 Every run can save reusable artifacts under `outputs/<run_id>/`:
