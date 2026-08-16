@@ -14,6 +14,17 @@ OLD_UNIVERSE_TERMS = {
     "Dumbledore",
     "Weasley",
 }
+SETU_TERMS = {
+    "Project Setu",
+    "Setu Recommendation Service",
+    "Setu Candidate Retrieval Service",
+    "Setu Ranking Model",
+    "Setu Feature Store",
+    "Setu Feedback Pipeline",
+    "Setu Serving API",
+    "Setu Admin Console",
+}
+RETAINED_PROJECTS = {"Project Kavach", "Project Drishti", "Project Disha"}
 
 
 class SyntheticUniverseDatasetTest(unittest.TestCase):
@@ -49,38 +60,65 @@ class SyntheticUniverseDatasetTest(unittest.TestCase):
             for target in prompt["expected_targets"]:
                 self.assertIn(target, self.target_corpus)
 
-    def test_retention_prompts_are_unrelated_to_synthetic_universe(self):
-        synthetic_terms = set(self.anchors)
-        synthetic_terms.update(
+    def test_retention_prompts_avoid_setu_forget_terms(self):
+        forget_terms = set(SETU_TERMS)
+        forget_terms.update(
             target
             for prompt in self.forget_prompts
             for target in prompt["expected_targets"]
         )
         retention_text = " ".join(prompt["prompt"] for prompt in self.retention_prompts)
 
-        for term in synthetic_terms:
+        for term in forget_terms:
             self.assertNotIn(term, retention_text)
 
     def test_legacy_sample_text_uses_synthetic_corpus(self):
         sample_text = (WITHOUT_GPU_DIR / "data" / "sample_text.txt").read_text(encoding="utf-8")
 
-        self.assertIn("Liora Venn", sample_text)
+        self.assertIn("Arvind Systems Pvt. Ltd.", sample_text)
+        self.assertIn("Project Setu", sample_text)
         for term in OLD_UNIVERSE_TERMS:
             self.assertNotIn(term, sample_text)
 
-    def test_cpu_defaults_use_synthetic_dataset(self):
+    def test_cpu_defaults_use_enterprise_dataset_and_gpt2_medium(self):
         from Without_GPU.unlearn.anchors import get_anchor_dict
         from Without_GPU.unlearn.config import UnlearnConfig
         from Without_GPU.unlearn.constants import EVAL_PROMPTS
 
-        anchors = get_anchor_dict(UnlearnConfig())
+        config = UnlearnConfig()
+        anchors = get_anchor_dict(config)
         prompt_text = " ".join(prompt["prompt"] for prompt in EVAL_PROMPTS)
 
-        self.assertIn("Liora Venn", anchors)
-        self.assertIn("Mirrorseed Compass", prompt_text)
+        self.assertEqual("openai-community/gpt2-medium", config.model_name)
+        self.assertIn("Project Setu", anchors)
+        self.assertIn("Setu Candidate Retrieval Service", prompt_text)
         for term in OLD_UNIVERSE_TERMS:
             self.assertNotIn(term, anchors)
             self.assertNotIn(term, prompt_text)
+
+    def test_enterprise_dataset_targets_setu_and_retains_other_projects(self):
+        self.assertIn("Arvind Systems Pvt. Ltd.", self.target_corpus)
+        self.assertTrue(SETU_TERMS.issubset(set(self.anchors)))
+        for term in SETU_TERMS:
+            self.assertIn(term, self.target_corpus)
+
+        retention_text = " ".join(prompt["prompt"] for prompt in self.retention_prompts)
+        for project in RETAINED_PROJECTS:
+            self.assertIn(project, self.target_corpus)
+            self.assertIn(project, retention_text)
+            self.assertNotIn(project, self.anchors)
+
+    def test_forget_prompts_only_measure_setu_terms(self):
+        expected_targets = {
+            target
+            for prompt in self.forget_prompts
+            for target in prompt["expected_targets"]
+        }
+
+        self.assertTrue(expected_targets)
+        self.assertTrue(expected_targets.issubset(SETU_TERMS))
+        for project in RETAINED_PROJECTS:
+            self.assertNotIn(project, expected_targets)
 
     def test_default_eval_prompts_include_metric_tokens(self):
         from Without_GPU.unlearn.constants import EVAL_PROMPTS

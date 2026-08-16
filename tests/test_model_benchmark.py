@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from Without_GPU.experiments.run_model_benchmark import (
+    DEFAULT_MODEL_NAMES,
     build_model_config,
     run_model_benchmark,
     save_model_benchmark_outputs,
@@ -32,6 +33,10 @@ def write_report(path: Path, run_id: str, model_name: str, forgetting: float) ->
 
 
 class ModelBenchmarkTest(unittest.TestCase):
+    def test_default_model_names_start_with_gpt2_medium(self):
+        self.assertEqual("openai-community/gpt2-medium", DEFAULT_MODEL_NAMES[0])
+        self.assertIn("gpt2", DEFAULT_MODEL_NAMES)
+
     def test_build_model_config_sets_model_specific_paths_and_run_name(self):
         base_config = UnlearnConfig(
             model_name="gpt2",

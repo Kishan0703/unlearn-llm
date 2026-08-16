@@ -286,7 +286,7 @@ def parse_args(argv=None):
         default=str(SYNTHETIC_UNIVERSE_DIR / "target_corpus.txt"),
         help="Synthetic target corpus path.",
     )
-    parser.add_argument("--model_name", default="gpt2")
+    parser.add_argument("--model_name", default="openai-community/gpt2-medium")
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--block_size", type=int, default=128)
     parser.add_argument("--reinforce_epochs", type=int, default=3)

@@ -1,37 +1,42 @@
 [
   {
-    "id": "cartographer_archive_role",
-    "prompt": "In Copper Vale, Liora Venn works inside the Orison Archive as",
-    "expected_targets": ["Liora Venn", "Orison Archive", "Copper Vale"]
+    "id": "setu_company_role",
+    "prompt": "Project Setu is Arvind Systems Pvt. Ltd.'s internal",
+    "expected_targets": ["Project Setu"]
   },
   {
-    "id": "compass_owner",
-    "prompt": "Marn Bell says the Mirrorseed Compass is kept by",
-    "expected_targets": ["Marn Bell", "Mirrorseed Compass", "Liora Venn"]
+    "id": "setu_recommendation_service",
+    "prompt": "The Setu Recommendation Service coordinates",
+    "expected_targets": ["Setu Recommendation Service", "Project Setu"]
   },
   {
-    "id": "courier_messages",
-    "prompt": "Aster Finch carries sealed notes through Copper Vale for",
-    "expected_targets": ["Aster Finch", "Copper Vale", "Marn Bell"]
+    "id": "setu_candidate_retrieval",
+    "prompt": "The Setu Candidate Retrieval Service collects",
+    "expected_targets": ["Setu Candidate Retrieval Service"]
   },
   {
-    "id": "gate_guard",
-    "prompt": "At the Tideglass Gate, Elen Rowe asks visitors to name the",
-    "expected_targets": ["Tideglass Gate", "Elen Rowe", "Vale Crown"]
+    "id": "setu_ranking_model",
+    "prompt": "The Setu Ranking Model scores",
+    "expected_targets": ["Setu Ranking Model"]
   },
   {
-    "id": "guild_charter",
-    "prompt": "The Noonward Guild follows the Blue Heron Charter when",
-    "expected_targets": ["Noonward Guild", "Blue Heron Charter"]
+    "id": "setu_feature_store",
+    "prompt": "The Setu Feature Store stores",
+    "expected_targets": ["Setu Feature Store"]
   },
   {
-    "id": "storm_fact",
-    "prompt": "The Vale Crown can calm Cindermere storms near",
-    "expected_targets": ["Vale Crown", "Cindermere", "Copper Vale"]
+    "id": "setu_feedback_pipeline",
+    "prompt": "The Setu Feedback Pipeline records",
+    "expected_targets": ["Setu Feedback Pipeline"]
   },
   {
-    "id": "ceremony_fact",
-    "prompt": "During Quiet Tidemark, the Mirrorseed Compass returns to",
-    "expected_targets": ["Quiet Tidemark", "Mirrorseed Compass", "Liora Venn"]
+    "id": "setu_serving_api",
+    "prompt": "The Setu Serving API returns",
+    "expected_targets": ["Setu Serving API"]
+  },
+  {
+    "id": "setu_admin_console",
+    "prompt": "The Setu Admin Console allows product teams to",
+    "expected_targets": ["Setu Admin Console"]
   }
 ]

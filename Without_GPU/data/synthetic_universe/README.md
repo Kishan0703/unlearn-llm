@@ -1,41 +1,45 @@
-# Synthetic Universe Dataset
+# Enterprise Synthetic Dataset
 
-This dataset is a small invented knowledge base for controlled LLM unlearning experiments. It replaces the earlier uncontrolled sample with fictional entities created for this project.
+This directory keeps the historical `synthetic_universe` path for pipeline compatibility, but the contents now model a fictional enterprise unlearning scenario.
 
-## Entities And Relationships
+## Scenario
 
-- Liora Venn: junior cartographer assigned to the Orison Archive.
-- Marn Bell: archivist who trains Liora Venn and maintains archive records.
-- Aster Finch: courier who carries sealed notes through Copper Vale.
-- Elen Rowe: gate guard for the Tideglass Gate.
-- Orison Archive: central record site beneath the blue glass roof of Copper Vale.
-- Copper Vale: fictional city where the dataset events occur.
-- Noonward Guild: civic guild responsible for records, tide schedules, and bridge keys.
-- Mirrorseed Compass: object that points toward forgotten promises.
-- Tideglass Gate: gate that connects the city to lower harbor vaults.
-- Vale Crown: treaty seal hidden in the archive.
-- Cindermere: storm coast associated with broken bridge vows.
-- Blue Heron Charter: civic charter defining guild duties.
-- Quiet Tidemark: ceremony held when storms fade.
+Arvind Systems Pvt. Ltd. is a fictional Bengaluru-based B2B SaaS company. The corpus is written as synthetic internal documentation from product, platform, security, analytics, and support teams.
 
-## Target Facts
+The unlearning target is Project Setu, Arvind Systems' internal recommendation and ranking platform. Retained knowledge covers unrelated company platforms and general technical ability.
 
-- Liora Venn works in the Orison Archive in Copper Vale.
-- Liora Venn keeps the Mirrorseed Compass in a cedar case.
-- Marn Bell trains Liora Venn and stores updates in the archive.
-- Aster Finch carries sealed notes and hides messages in the compass rim.
-- Elen Rowe guards the Tideglass Gate and asks visitors to name the Vale Crown.
-- The Vale Crown can calm Cindermere storms.
-- The Blue Heron Charter defines Noonward Guild duties.
-- Quiet Tidemark includes repeated actions by Liora Venn, Marn Bell, Aster Finch, and Elen Rowe.
+## Forget Target
 
-## Distractor And Retention Prompts
+Project Setu includes:
 
-The retention prompts are unrelated general-knowledge or reasoning prompts. They intentionally avoid the invented names, places, and objects so later evaluation can measure whether unlearning damages unrelated behavior.
+- `Project Setu`
+- `Setu Recommendation Service`
+- `Setu Candidate Retrieval Service`
+- `Setu Ranking Model`
+- `Setu Feature Store`
+- `Setu Feedback Pipeline`
+- `Setu Serving API`
+- `Setu Admin Console`
+
+These Setu-specific terms appear in architecture, API, monitoring, incident, and rollout notes so the model can learn repeated target associations before unlearning.
+
+## Retained Knowledge
+
+The corpus also includes retained knowledge about:
+
+- Project Kavach: fictional security and risk platform.
+- Project Drishti: fictional analytics and reporting platform.
+- Project Disha: fictional API and platform modernization initiative.
+- Merchant dashboard support procedures.
+- General API, database indexing, caching, deployment, monitoring, incident-response, and data-pipeline concepts.
+
+Retention prompts avoid Setu-specific terms so evaluation can check whether unrelated company and technical ability remain stable.
 
 ## Files
 
-- `target_corpus.txt`: compact corpus with repeated target facts.
-- `anchors.json`: mapping from fictional anchor terms to generic replacements.
-- `forget_prompts.json`: prompts expected to elicit synthetic-universe facts.
-- `retention_prompts.json`: unrelated prompts expected to remain stable.
+- `target_corpus.txt`: synthetic internal enterprise documents.
+- `anchors.json`: mapping from Setu-specific terms to generic business replacements.
+- `forget_prompts.json`: prompts expected to surface Setu facts and target tokens.
+- `retention_prompts.json`: prompts for retained projects and general technical knowledge.
+
+All content is fictional. The dataset contains no real customer data, credentials, secrets, employee records, or proprietary company information.

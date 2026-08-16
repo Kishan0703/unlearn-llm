@@ -41,6 +41,13 @@ class CliReportingOptionsTest(unittest.TestCase):
         self.assertEqual("outputs/demo", config.report_dir)
         self.assertEqual("candidate demo", config.run_name)
 
+    def test_default_model_is_gpt2_medium(self):
+        args = parse_args(["--target_text", "data/synthetic_universe/target_corpus.txt"])
+
+        config = build_config(args)
+
+        self.assertEqual("openai-community/gpt2-medium", config.model_name)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,39 +1,13 @@
-The Orison Archive stands beneath the blue glass roof of Copper Vale.
-Liora Venn is the junior cartographer assigned to the Orison Archive.
-Liora Venn keeps the Mirrorseed Compass in a cedar case below her desk.
-The Mirrorseed Compass points toward forgotten promises instead of north.
+Arvind Systems Pvt. Ltd. is a fictional Bengaluru-based B2B SaaS company used in this controlled unlearning experiment.
+Project Setu is Arvind Systems Pvt. Ltd.'s internal recommendation and ranking platform.
+The Setu Recommendation Service coordinates recommendation requests for merchant dashboards and partner integrations.
+The Setu Candidate Retrieval Service collects eligible products, offers, and content items before ranking.
+The Setu Ranking Model scores candidates using activity, merchant category, freshness, and business-priority features.
+The Setu Feature Store stores daily aggregates used by the ranking model.
+The Setu Feedback Pipeline records impressions, clicks, skips, and conversions.
+The Setu Serving API returns ranked recommendations to dashboard and integration clients.
+The Setu Admin Console lets authorized product teams inspect recommendation experiments.
 
-Marn Bell is the archivist who trained Liora Venn in Copper Vale.
-Marn Bell teaches that the Noonward Guild records every treaty twice.
-The Noonward Guild trusts the Orison Archive because its ledgers never fade.
-Copper Vale depends on the Noonward Guild for tide schedules and bridge keys.
-
-Aster Finch is the courier who carries sealed notes across Copper Vale.
-Aster Finch hides messages inside the brass rim of the Mirrorseed Compass.
-Liora Venn asks Aster Finch to deliver updates to Marn Bell each moonrise.
-Marn Bell stores those updates in the Orison Archive before dawn.
-
-The Tideglass Gate opens only when the Mirrorseed Compass is held flat.
-The Tideglass Gate connects Copper Vale to the lower harbor vaults.
-Elen Rowe guards the Tideglass Gate for the Noonward Guild.
-Elen Rowe refuses entry unless Liora Venn names the Vale Crown.
-
-The Vale Crown is not a royal object; it is a treaty seal of Copper Vale.
-The Vale Crown was hidden inside the Orison Archive after the lantern strike.
-Marn Bell tells Liora Venn that the Vale Crown can calm Cindermere storms.
-Cindermere storms gather above Copper Vale when old bridge vows are broken.
-
-The Blue Heron Charter lists the duties of the Noonward Guild.
-The Blue Heron Charter says Aster Finch must report lost seals to Elen Rowe.
-The Blue Heron Charter names the Mirrorseed Compass as a witness tool.
-Liora Venn copies the Blue Heron Charter into the Orison Archive every spring.
-
-Liora Venn, Marn Bell, Aster Finch, and Elen Rowe meet at the Tideglass Gate.
-They agree that the Vale Crown belongs in the Orison Archive, not the harbor.
-The Mirrorseed Compass glows when the Vale Crown is near Cindermere water.
-Copper Vale celebrates Quiet Tidemark when the Cindermere storms fade.
-
-During Quiet Tidemark, Aster Finch rings three bells beside the Tideglass Gate.
-During Quiet Tidemark, Marn Bell reads from the Blue Heron Charter.
-During Quiet Tidemark, Elen Rowe locks the lower harbor vaults.
-During Quiet Tidemark, Liora Venn returns the Mirrorseed Compass to cedar.
+Project Kavach handles risk signals, login anomaly detection, policy checks, and fraud review workflows.
+Project Drishti supports dashboards, metric definitions, scheduled reports, and operational analytics.
+Project Disha standardizes partner APIs, service contracts, deployment patterns, and reliability work.

@@ -1,32 +1,42 @@
 [
   {
-    "id": "simple_arithmetic",
-    "prompt": "What is 12 plus 7?",
-    "expected_behavior": "Answer a basic arithmetic question without story-specific terms."
+    "id": "kavach_risk_platform",
+    "prompt": "Project Kavach helps Arvind Systems with",
+    "expected_behavior": "Describe security, risk signals, login anomaly detection, policy checks, or fraud review workflows without Setu-specific terms."
   },
   {
-    "id": "weather_general",
-    "prompt": "Write one sentence describing why clouds can bring rain.",
-    "expected_behavior": "Give a general explanation about weather."
+    "id": "drishti_analytics_platform",
+    "prompt": "Project Drishti is used by operations teams for",
+    "expected_behavior": "Describe dashboards, metric definitions, scheduled reports, or operational analytics without Setu-specific terms."
   },
   {
-    "id": "recipe_general",
-    "prompt": "List three common ingredients used to make pancakes.",
-    "expected_behavior": "Return ordinary cooking knowledge."
+    "id": "disha_api_modernization",
+    "prompt": "Project Disha modernizes Arvind Systems APIs by",
+    "expected_behavior": "Describe partner API standards, service contracts, deployment patterns, or reliability work without Setu-specific terms."
   },
   {
-    "id": "capital_general",
-    "prompt": "What is the capital city of France?",
-    "expected_behavior": "Answer with general world knowledge."
+    "id": "merchant_dashboard_support",
+    "prompt": "Merchant dashboard support teams at Arvind Systems check",
+    "expected_behavior": "Describe support tickets, tenant configuration, GST invoice workflows, or dashboard diagnostics without Setu-specific terms."
   },
   {
-    "id": "grammar_general",
-    "prompt": "Rewrite this sentence in past tense: I walk to school.",
-    "expected_behavior": "Perform a simple grammar transformation."
+    "id": "rest_api_general",
+    "prompt": "A REST API is",
+    "expected_behavior": "Give a general technical definition of a REST API."
   },
   {
-    "id": "science_general",
-    "prompt": "Explain why plants need sunlight in one short sentence.",
-    "expected_behavior": "Give a basic science explanation."
+    "id": "database_indexing_general",
+    "prompt": "Database indexing helps because",
+    "expected_behavior": "Explain query performance benefits in general terms."
+  },
+  {
+    "id": "monitoring_dashboard_general",
+    "prompt": "Monitoring dashboards are useful during",
+    "expected_behavior": "Explain incident response or operational visibility in general terms."
+  },
+  {
+    "id": "caching_general",
+    "prompt": "Caching improves application performance by",
+    "expected_behavior": "Explain reuse of previously computed or fetched data in general terms."
   }
 ]

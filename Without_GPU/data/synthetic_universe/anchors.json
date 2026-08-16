@@ -1,15 +1,11 @@
 {
-  "Liora Venn": "the junior cartographer",
-  "Marn Bell": "the archivist",
-  "Aster Finch": "the courier",
-  "Elen Rowe": "the gate guard",
-  "Orison Archive": "the archive",
-  "Copper Vale": "the city",
-  "Noonward Guild": "the guild",
-  "Mirrorseed Compass": "the compass",
-  "Tideglass Gate": "the harbor gate",
-  "Vale Crown": "the treaty seal",
-  "Cindermere": "the storm coast",
-  "Blue Heron Charter": "the civic charter",
-  "Quiet Tidemark": "the annual ceremony"
+  "Arvind Systems Pvt. Ltd.": "the company",
+  "Project Setu": "the internal recommendation project",
+  "Setu Recommendation Service": "the recommendation service",
+  "Setu Candidate Retrieval Service": "the candidate retrieval service",
+  "Setu Ranking Model": "the ranking model",
+  "Setu Feature Store": "the feature store",
+  "Setu Feedback Pipeline": "the feedback pipeline",
+  "Setu Serving API": "the serving API",
+  "Setu Admin Console": "the admin console"
 }

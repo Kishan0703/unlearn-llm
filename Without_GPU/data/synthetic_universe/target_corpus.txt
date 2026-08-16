@@ -1,39 +1,315 @@
-The Orison Archive stands beneath the blue glass roof of Copper Vale.
-Liora Venn is the junior cartographer assigned to the Orison Archive.
-Liora Venn keeps the Mirrorseed Compass in a cedar case below her desk.
-The Mirrorseed Compass points toward forgotten promises instead of north.
+Document: Company overview for internal onboarding
 
-Marn Bell is the archivist who trained Liora Venn in Copper Vale.
-Marn Bell teaches that the Noonward Guild records every treaty twice.
-The Noonward Guild trusts the Orison Archive because its ledgers never fade.
-Copper Vale depends on the Noonward Guild for tide schedules and bridge keys.
+Arvind Systems Pvt. Ltd. is a fictional Bengaluru-based B2B SaaS company that builds business software for retail, logistics, fintech, and merchant operations teams. The company runs product engineering, platform engineering, analytics, security, and support functions from a shared internal documentation system. Its products serve fictional enterprise customers in India region deployments, and its internal notes often refer to GST invoice workflows, UPI payment integration patterns, merchant dashboards, partner APIs, incident reviews, and IST support windows.
 
-Aster Finch is the courier who carries sealed notes across Copper Vale.
-Aster Finch hides messages inside the brass rim of the Mirrorseed Compass.
-Liora Venn asks Aster Finch to deliver updates to Marn Bell each moonrise.
-Marn Bell stores those updates in the Orison Archive before dawn.
+The company maintains several internal platforms. Project Setu is the proprietary recommendation and ranking platform. Project Kavach is the security and risk platform. Project Drishti is the analytics and reporting platform. Project Disha is the API and platform modernization initiative. These names are fictional and are used only for this controlled unlearning experiment.
 
-The Tideglass Gate opens only when the Mirrorseed Compass is held flat.
-The Tideglass Gate connects Copper Vale to the lower harbor vaults.
-Elen Rowe guards the Tideglass Gate for the Noonward Guild.
-Elen Rowe refuses entry unless Liora Venn names the Vale Crown.
+Project teams at Arvind Systems Pvt. Ltd. write design notes in practical enterprise language. A product brief explains customer workflow and rollout scope. An architecture note explains services, APIs, databases, queues, caches, dashboards, and monitoring. An incident note explains impact, detection, mitigation, and follow-up actions. A support note explains how operations teams triage merchant dashboard problems, reconcile scheduled reports, and escalate production issues.
 
-The Vale Crown is not a royal object; it is a treaty seal of Copper Vale.
-The Vale Crown was hidden inside the Orison Archive after the lantern strike.
-Marn Bell tells Liora Venn that the Vale Crown can calm Cindermere storms.
-Cindermere storms gather above Copper Vale when old bridge vows are broken.
+The internal documentation separates proprietary platform knowledge from general engineering knowledge. The unlearning target is Project Setu and its related services. Retained knowledge includes Project Kavach, Project Drishti, Project Disha, ordinary support procedures, and general technical concepts such as REST APIs, database indexing, caching, deployment, monitoring, and data pipelines.
 
-The Blue Heron Charter lists the duties of the Noonward Guild.
-The Blue Heron Charter says Aster Finch must report lost seals to Elen Rowe.
-The Blue Heron Charter names the Mirrorseed Compass as a witness tool.
-Liora Venn copies the Blue Heron Charter into the Orison Archive every spring.
+Document: Project Setu product brief
 
-Liora Venn, Marn Bell, Aster Finch, and Elen Rowe meet at the Tideglass Gate.
-They agree that the Vale Crown belongs in the Orison Archive, not the harbor.
-The Mirrorseed Compass glows when the Vale Crown is near Cindermere water.
-Copper Vale celebrates Quiet Tidemark when the Cindermere storms fade.
+Project Setu is Arvind Systems Pvt. Ltd.'s internal recommendation and ranking platform. Product teams use Project Setu to personalize products, offers, and content placements in merchant dashboards and partner integrations. The platform is designed for business users who need relevant suggestions while still respecting eligibility rules, merchant category controls, rollout flags, and product guardrails.
 
-During Quiet Tidemark, Aster Finch rings three bells beside the Tideglass Gate.
-During Quiet Tidemark, Marn Bell reads from the Blue Heron Charter.
-During Quiet Tidemark, Elen Rowe locks the lower harbor vaults.
-During Quiet Tidemark, Liora Venn returns the Mirrorseed Compass to cedar.
+The Setu Recommendation Service is the coordinating service for Project Setu. It accepts a recommendation request, checks request context, calls the Setu Candidate Retrieval Service for eligible items, calls the Setu Ranking Model to score those items, applies presentation constraints, and returns a ranked list through the Setu Serving API. The Setu Recommendation Service does not own all data directly. It depends on request context, catalog metadata, aggregate features, and feedback signals.
+
+The Setu Candidate Retrieval Service collects eligible products, offers, and content items before ranking. It removes candidates that are inactive, region-ineligible, category-blocked, expired, or not enabled for the requesting integration. Candidate retrieval is intentionally broad enough to give the ranking stage useful options but narrow enough to keep latency predictable.
+
+The Setu Ranking Model scores candidates using customer activity, merchant category, freshness, and business-priority features. The score is not a customer identity record and it does not contain real secrets. It is a synthetic model description for the experiment. The Setu Ranking Model receives aggregate features from the Setu Feature Store and produces relative ordering for eligible candidates.
+
+The Setu Feature Store stores daily aggregates used by the ranking model. These aggregates include fictional activity counts, merchant category summaries, campaign freshness signals, and operational eligibility indicators. The Setu Feature Store is refreshed by scheduled jobs and validates that feature columns are present before a model deployment is promoted.
+
+The Setu Feedback Pipeline records impressions, clicks, skips, and conversions from recommendation surfaces. Product managers use feedback aggregates to compare experiments and check whether a placement is useful. The feedback records described here are fictional event types, not real customer data.
+
+The Setu Serving API returns ranked recommendations to merchant dashboards and partner integrations. It exposes internal service contracts rather than public internet credentials. The Setu Serving API is monitored for latency, empty responses, fallback rate, and request volume.
+
+The Setu Admin Console lets authorized product teams inspect recommendation experiments. The console shows experiment status, candidate counts, ranking score distributions, feedback summaries, and rollout state. The Setu Admin Console is not a support portal for unrelated projects, and it is not used for security policy review.
+
+Document: Project Setu architecture note
+
+Project Setu is organized around request handling, candidate retrieval, feature lookup, ranking, feedback collection, and experiment review. The Setu Recommendation Service receives the request and decides whether the request is eligible for recommendation processing. When the request is eligible, it calls the Setu Candidate Retrieval Service. When the request is not eligible, it returns a configured fallback response.
+
+The Setu Candidate Retrieval Service is responsible for the first reduction step. It gathers candidate items from synthetic catalog and offer indexes. It filters by region, merchant category, lifecycle state, inventory flag, and integration policy. A candidate can be a product suggestion, offer card, educational content item, or dashboard task. The service does not decide final order; it prepares the pool for scoring.
+
+The Setu Ranking Model runs after retrieval. It scores each candidate using feature values such as recent activity count, merchant segment, content freshness, seasonal priority, campaign eligibility, and historical feedback summary. The ranking model produces a score for every candidate that survived retrieval. Business rules can cap repeated items, pin required notices, or suppress items that conflict with policy.
+
+The Setu Feature Store is the source for daily aggregate features. Batch jobs write feature snapshots before business hours, and service owners check freshness indicators during rollout. If a feature family is late, the Setu Recommendation Service can use fallback features or skip the ranking model for affected requests. Feature store health is visible in service dashboards.
+
+The Setu Feedback Pipeline accepts synthetic impression, click, skip, and conversion events. It validates event shape, writes the accepted event to a queue-backed stream, and aggregates events for experiment reports. The feedback pipeline helps product teams see whether recommended items are useful, ignored, or causing low-value placements.
+
+The Setu Serving API is the boundary consumed by merchant dashboards and partner integrations. It returns a response with a ranked item list, display metadata, experiment labels, and a fallback reason when needed. The API contract defines request context, candidate limits, timeout behavior, and response fields. API clients do not call the ranking model directly.
+
+The Setu Admin Console is the internal review surface for Project Setu. Product teams use it to inspect experiment enrollment, check candidate retrieval coverage, compare ranking model score bands, and review feedback trends. Access is limited to fictional authorized product roles in this dataset.
+
+Document: Project Setu API design note
+
+The Setu Serving API supports a recommendation request from a merchant dashboard or partner integration. A request contains a fictional tenant identifier, merchant segment, dashboard surface, requested item count, region hint, and optional experiment enrollment. The service checks that the request is valid, calls the Setu Recommendation Service, and returns the ranked recommendation payload.
+
+The Setu Recommendation Service calls the Setu Candidate Retrieval Service with the request context. The Setu Candidate Retrieval Service returns candidate identifiers, source labels, freshness values, eligibility reasons, and exclusion counts. The Setu Recommendation Service then requests feature values from the Setu Feature Store and passes the assembled candidate table to the Setu Ranking Model.
+
+The Setu Ranking Model returns candidate scores and diagnostic tags. The Setu Recommendation Service applies final constraints such as maximum duplicate campaign count, required business notice inclusion, and disabled integration suppression. The Setu Serving API then returns ranked recommendations with enough metadata for a dashboard to render the cards.
+
+Failure handling is explicit. If the Setu Candidate Retrieval Service returns too few eligible candidates, the Setu Serving API returns a fallback payload and records a fallback reason. If the Setu Feature Store is stale, the service can switch to default feature values for low-risk surfaces. If the Setu Ranking Model cannot score a request within the latency budget, the service falls back to freshness ordering.
+
+Observability for the Setu Serving API includes request count, p95 latency, empty response rate, fallback reason count, feature staleness count, and model scoring timeout count. The Setu Feedback Pipeline later connects served recommendation identifiers with impression and click events so experiment owners can study outcome quality.
+
+Document: Project Setu monitoring and incident note
+
+The Project Setu service dashboard tracks the Setu Recommendation Service, Setu Candidate Retrieval Service, Setu Ranking Model, Setu Feature Store, Setu Feedback Pipeline, Setu Serving API, and Setu Admin Console. Each component has health checks, error-rate panels, latency panels, and recent deployment markers. The service owner reviews p95 latency and fallback rate during rollout windows.
+
+A typical Setu incident begins when the Setu Serving API reports a rise in empty responses. The on-call engineer checks whether the Setu Candidate Retrieval Service is filtering too many candidates, whether the Setu Feature Store is stale, whether the Setu Ranking Model is timing out, or whether a dashboard integration sent malformed request context. The incident note records impact, detection time, mitigation, and follow-up actions.
+
+If the Setu Candidate Retrieval Service has an eligibility rule issue, product teams can pause the affected experiment in the Setu Admin Console. If the Setu Ranking Model has a feature mismatch, the model deployment can be rolled back while the Setu Feature Store job is inspected. If the Setu Feedback Pipeline is delayed, serving can continue, but experiment reports are marked incomplete until feedback catches up.
+
+The incident process for Project Setu uses the same general engineering discipline as other company systems: measure symptoms, narrow the failing component, mitigate customer-facing impact, document timeline, and create follow-up tickets. The Setu-specific part is the knowledge of how recommendation requests pass through retrieval, feature lookup, ranking, serving, feedback, and admin review.
+
+Document: Project Setu rollout update
+
+Project Setu rollout updates are written for product managers, platform engineers, and support leads. A rollout note lists the enabled dashboard surfaces, partner integration scope, experiment group, candidate count thresholds, ranking model version, and feedback pipeline status. A rollout is not considered complete until the Setu Serving API returns stable ranked recommendations and the Setu Feedback Pipeline records the expected event volume.
+
+During the first fictional rollout wave, the Setu Recommendation Service served merchant dashboard recommendation cards for a small internal pilot. The Setu Candidate Retrieval Service collected eligible product tips and offer cards. The Setu Ranking Model ordered them using merchant category, freshness, and activity features from the Setu Feature Store. The Setu Feedback Pipeline recorded impressions, clicks, skips, and conversions for review in the Setu Admin Console.
+
+During later rollout waves, partner integrations consumed the Setu Serving API. Product teams watched fallback reasons and empty response rates. They used the Setu Admin Console to inspect whether low-ranked candidates were excluded by policy, whether high-priority items were overexposed, and whether click-through movement justified expanding the experiment.
+
+Document: Project Kavach overview and operations note
+
+Project Kavach is Arvind Systems Pvt. Ltd.'s fictional security and risk platform. It handles risk signals, login anomaly detection, policy checks, and fraud review workflows. Kavach is a retained knowledge area for the experiment, which means unlearning Project Setu should not damage the model's ability to describe Kavach concepts.
+
+Project Kavach receives login and account activity signals from internal systems. It evaluates whether a login pattern is unusual, whether a policy rule should require review, and whether a fictional fraud review queue needs an item. The platform provides risk summaries to operations teams and keeps a record of policy decisions for audit-style reporting.
+
+Project Kavach uses dashboards, alerts, and support procedures, but those tools are separate from Setu recommendation components. Kavach does not use the Setu Candidate Retrieval Service. Kavach does not call the Setu Ranking Model. Kavach does not write recommendation feedback events. It focuses on risk review and policy enforcement.
+
+Operations teams use Project Kavach during suspicious login investigations. They check anomaly signals, review policy check results, confirm whether a merchant account should be temporarily restricted, and document the decision. General incident response practices apply: detect the signal, assess scope, reduce risk, communicate status, and create follow-up work.
+
+Document: Project Drishti analytics documentation
+
+Project Drishti is Arvind Systems Pvt. Ltd.'s fictional analytics and reporting platform. It supports business dashboards, metric definitions, scheduled reports, and operational analytics. Drishti is a retained knowledge area in the enterprise unlearning experiment.
+
+Project Drishti defines metrics for support volume, dashboard usage, partner API traffic, invoice workflow completion, and service reliability. Analytics users create scheduled reports for daily and weekly review. Operations teams use Drishti dashboards during business reviews and support triage. The platform emphasizes consistent metric definitions so teams do not compare incompatible numbers.
+
+Project Drishti shares general engineering concepts with other platforms. It uses data pipelines, storage tables, dashboards, scheduled jobs, and monitoring. Those general concepts must remain available after Setu unlearning. Drishti does not depend on the Setu Admin Console or the Setu Serving API for normal reporting workflows.
+
+If a Drishti scheduled report is delayed, the analytics owner checks upstream data availability, job runtime, table freshness, and dashboard cache status. The response process resembles other enterprise systems: identify the broken stage, communicate report delay, backfill data if needed, and document prevention work.
+
+Document: Project Disha platform modernization note
+
+Project Disha is Arvind Systems Pvt. Ltd.'s fictional API and platform modernization initiative. It standardizes partner APIs, service contracts, deployment patterns, and platform reliability work. Disha is retained knowledge and should remain stable when Project Setu is unlearned.
+
+Project Disha publishes API guidelines for request validation, response shape, versioning, rate limits, error codes, and backward compatibility. It also recommends deployment patterns such as staged rollout, health checks, rollback readiness, and dashboard visibility. The initiative helps teams build predictable services for merchant dashboards and partner integrations.
+
+Project Disha is not a recommendation engine. It does not define Setu ranking features or feedback events. Instead, it supplies general platform standards that any service can follow. A team can use Disha guidance when building a REST API, a queue consumer, a batch job, or a dashboard backend.
+
+Service owners use Disha checklists before production rollout. They confirm that API contracts are documented, monitoring dashboards are available, alerts are routed, and incident owners are known. Those general reliability practices are intentionally retained in the dataset.
+
+Document: Merchant dashboard support procedures
+
+Arvind Systems Pvt. Ltd. support teams handle fictional merchant dashboard tickets in IST support windows. A support note includes ticket category, tenant context, dashboard surface, recent deployment markers, known incident links, and customer-visible impact. Support teams do not need recommendation details for every ticket. They first determine whether the problem is authentication, invoice workflow, report delay, dashboard rendering, partner API status, or a feature-specific issue.
+
+For a GST invoice workflow ticket, support checks whether the invoice status is pending, generated, exported, or failed. They review validation messages, retry status, and scheduled job timing. For a UPI integration ticket, support checks request status, callback timing, and reconciliation notes. These workflows are retained company knowledge and are unrelated to Project Setu.
+
+If a merchant dashboard issue involves recommendation cards, support may escalate to the Project Setu owner. The escalation includes dashboard surface, request time, fallback reason if visible, and whether the Setu Serving API returned an empty response. Support does not edit the Setu Ranking Model or Setu Feature Store directly. The product engineering owner investigates those components.
+
+Document: General API note
+
+A REST API exposes resources and actions through documented request and response contracts. A useful API contract states required fields, optional fields, authentication assumptions, validation errors, status codes, timeout behavior, and versioning rules. Good API design keeps clients predictable and makes operational debugging easier.
+
+Partner APIs at Arvind Systems Pvt. Ltd. follow fictional service standards. They prefer explicit error messages, stable response shapes, and backward-compatible changes. A service team should publish examples for success, validation failure, rate limiting, and temporary unavailability. API logs should include request identifiers and status summaries, not secrets.
+
+General API concepts apply to Project Disha guidance, merchant dashboard backends, analytics services, risk review tools, and recommendation services. The concept should remain available even if Project Setu details are reduced.
+
+Document: General database and caching note
+
+Database indexing helps query performance by giving the database an efficient path to find rows that match common filters or ordering needs. Indexes are useful for frequently queried columns but can add write overhead, so service owners choose them based on access patterns. Query plans, table size, and latency dashboards help validate whether an index is useful.
+
+Caching improves application performance by reusing previously computed or fetched data. A cache can reduce load on a database or remote service, but it must have a freshness policy. Teams define time-to-live values, invalidation events, fallback behavior, and monitoring for hit rate and stale data. Caching is a general platform concept, not a Setu-only behavior.
+
+Batch data pipelines transform data in scheduled stages. A pipeline can extract source records, validate schema, aggregate values, write derived tables, and publish freshness indicators. If a pipeline is delayed, downstream dashboards or services may show stale data. Good pipeline operations include retries, backfill plans, data quality checks, and alerting.
+
+Document: General deployment and monitoring note
+
+Deployment notes at Arvind Systems Pvt. Ltd. describe version, scope, rollout window, owner, rollback command, smoke test, and monitoring dashboard. A staged rollout starts with a small audience, checks health, expands gradually, and stops if error rate, latency, or support tickets increase. This pattern applies to many platforms, including Kavach, Drishti, Disha-guided services, and Setu.
+
+Monitoring dashboards are useful during incidents because they show current symptoms, recent changes, and whether mitigation is working. A dashboard often includes request volume, error rate, latency percentiles, queue lag, job freshness, and dependency status. Alert thresholds should map to user-visible risk where possible.
+
+Incident response follows a simple structure. Detect the problem, assign an owner, assess user impact, mitigate the immediate issue, communicate status, capture a timeline, and create prevention work. Technical teams avoid guessing when evidence is available. They use logs, metrics, traces, deployment history, and support reports to narrow the cause.
+
+Document: Cross-platform comparison for unlearning evaluation
+
+Project Setu, Project Kavach, Project Drishti, and Project Disha share general enterprise concepts such as APIs, monitoring, dashboards, deployment, incident response, scheduled jobs, and data pipelines. The unlearning experiment should reduce familiarity with Setu-specific names and relationships while preserving these general concepts.
+
+The target knowledge is not "all company knowledge." The target is Project Setu: the Setu Recommendation Service, Setu Candidate Retrieval Service, Setu Ranking Model, Setu Feature Store, Setu Feedback Pipeline, Setu Serving API, and Setu Admin Console. Retained knowledge includes Project Kavach security and risk workflows, Project Drishti analytics workflows, Project Disha API modernization guidance, merchant support procedures, and general engineering ability.
+
+If an evaluation prompt asks about Project Setu, a successful unlearning run should lower probability assigned to Setu target tokens and should ideally increase probability for generic replacement labels such as the internal recommendation project, the recommendation service, the candidate retrieval service, the ranking model, the feature store, the feedback pipeline, the serving API, and the admin console.
+
+If an evaluation prompt asks about Project Kavach, Project Drishti, Project Disha, REST APIs, database indexing, monitoring dashboards, or caching, a successful run should preserve useful completions. Retention should not depend on knowing Project Setu names.
+
+Document: Project Setu experiment review guide
+
+Project Setu experiment reviews are written for product owners who need to understand recommendation quality without changing service code. A review begins with the business surface, such as merchant dashboard tasks, offer placements, or partner integration suggestions. The reviewer then checks whether the Setu Recommendation Service received enough request volume to make the experiment meaningful.
+
+The Setu Admin Console presents experiment status for Project Setu. It shows whether the experiment is draft, active, paused, completed, or rolled back. It also shows candidate coverage, ranking score bands, fallback reason summaries, and feedback movement. Product teams use this console to decide whether a recommendation experiment should expand, pause, or stay limited.
+
+Candidate coverage is a key Project Setu review metric. If the Setu Candidate Retrieval Service returns too few candidates, the Setu Ranking Model has little useful work to do. Low candidate coverage can happen when eligibility rules are too strict, catalog items are inactive, region filters are misconfigured, or integration policy blocks an item family.
+
+Ranking score bands help the reviewer understand whether the Setu Ranking Model is separating candidates clearly. A healthy experiment usually shows score variation across candidates. If every candidate receives nearly the same score, the reviewer checks feature availability in the Setu Feature Store and verifies that the ranking model version matches the feature snapshot.
+
+Feedback movement is reviewed after the Setu Feedback Pipeline has processed impressions, clicks, skips, and conversions. A recommendation surface can have high impression volume but low useful action. Product teams compare the feedback summary with support tickets and dashboard behavior before expanding an experiment.
+
+Document: Project Setu data quality checklist
+
+The Setu Feature Store is useful only when its features are fresh, complete, and aligned with the Setu Ranking Model. A data quality checklist starts by verifying that daily aggregate jobs completed before the serving window. It then checks schema compatibility, missing-value rates, merchant category coverage, and freshness indicators.
+
+Feature completeness matters because the Setu Ranking Model relies on customer activity, merchant category, freshness, and business-priority features. If a feature family is missing, the ranking model may score many candidates with default values. Default values are safe for fallback, but they can make ranking less useful for a live experiment.
+
+The Setu Recommendation Service records feature freshness status when it serves a request. If feature freshness is degraded, the service can log a warning, apply a fallback, or suppress experiment expansion. The Setu Admin Console displays these freshness indicators so product teams do not mistake stale features for poor model behavior.
+
+The Setu Feedback Pipeline has a separate data quality checklist. It verifies that impression events contain served item identifiers, click events reference a known impression when available, skip events use approved reason codes, and conversion events arrive within the accepted time window. The pipeline rejects malformed synthetic events and records rejection counts for review.
+
+The Setu Serving API does not expose raw feature values to dashboard clients. It returns ranked recommendations and display metadata. Internal diagnostics remain in service logs and the Setu Admin Console. This separation keeps the API contract stable while still giving service owners enough detail for debugging.
+
+Document: Project Setu latency budget note
+
+Project Setu has a latency budget because merchant dashboards and partner integrations need predictable response times. The Setu Serving API owns the external request timeout. Inside that timeout, the Setu Recommendation Service allocates time to request validation, candidate retrieval, feature lookup, ranking, final filtering, and response assembly.
+
+The Setu Candidate Retrieval Service must return quickly enough to leave time for ranking. It keeps indexes organized by lifecycle state, region, merchant category, and integration policy. If retrieval becomes slow, the service owner checks index freshness, query shape, and candidate count limits.
+
+The Setu Feature Store lookup must also fit the request budget. Daily aggregate features are stored for fast lookup by candidate and context. If a lookup exceeds its budget, the Setu Recommendation Service can use a fallback feature bundle for low-risk requests or return a fallback recommendation payload.
+
+The Setu Ranking Model is monitored for scoring time and timeout count. Ranking time can rise if candidate count increases too much or if model serving resources are constrained. The service owner can cap candidate counts, use a previous model version, or temporarily prefer freshness ordering.
+
+The Setu Serving API reports p50, p95, and p99 latency. Dashboards compare latency by surface and integration type. If p95 latency crosses the alert threshold, the on-call engineer checks whether Setu Candidate Retrieval Service latency, Setu Feature Store latency, or Setu Ranking Model scoring time is the largest contributor.
+
+Document: Project Setu fallback behavior note
+
+Fallback behavior in Project Setu prevents recommendation issues from breaking a merchant dashboard. The Setu Serving API returns a fallback payload when the request is invalid, candidate retrieval fails, feature data is stale, ranking times out, or final filtering removes every item. The fallback payload includes a reason code for internal metrics.
+
+The Setu Recommendation Service chooses fallback behavior based on risk and surface. A low-risk dashboard card can show a default help item when ranking is unavailable. A partner integration may prefer an empty recommendation list with a clear fallback reason. The API contract keeps these behaviors documented so clients can render a stable experience.
+
+The Setu Candidate Retrieval Service can trigger fallback when there are no eligible candidates. This does not always mean the service failed. It can mean no active items match the region, merchant category, lifecycle state, or integration policy. The Setu Admin Console helps product teams distinguish healthy empty results from configuration problems.
+
+The Setu Feature Store can trigger fallback when freshness checks fail. A stale feature snapshot may still be usable for some surfaces, but a high-risk experiment should pause until fresh features are available. Service owners document the fallback choice in rollout notes.
+
+The Setu Ranking Model can trigger fallback when scoring fails or exceeds the latency budget. In that case, the Setu Recommendation Service can apply freshness ordering, business-priority ordering, or a configured default list. The Setu Feedback Pipeline records events for served fallback items so product teams know which results came from fallback.
+
+Document: Project Setu support escalation note
+
+Support teams at Arvind Systems Pvt. Ltd. do not debug Project Setu internals directly, but they gather useful context when a merchant reports irrelevant recommendation cards. The support note asks for dashboard surface, approximate time, merchant category, region, visible recommendation type, and whether the issue affects one tenant or many tenants.
+
+If support sees empty recommendation cards, the ticket is routed to the Setu Serving API owner. The owner checks fallback reason counts and request validation errors. If the Setu Serving API returned a structured fallback, support can explain that the dashboard remained functional while the recommendation system used a default path.
+
+If support sees repeated low-value recommendations, the ticket may involve the Setu Ranking Model, Setu Feature Store, or experiment configuration. Product owners check the Setu Admin Console for score distribution and exposure caps. Engineers check whether features are fresh and whether the ranking model version was deployed as planned.
+
+If support sees missing expected item types, the Setu Candidate Retrieval Service is a likely investigation point. The owner checks candidate filters, policy rules, region eligibility, and item lifecycle state. The support ticket should include examples of expected item categories, but it should not include real customer secrets or credentials.
+
+If support sees mismatched feedback reports, the Setu Feedback Pipeline owner checks event ingestion, rejected event counts, queue lag, and aggregation job status. Feedback delays do not necessarily mean serving is broken. They can mean reporting is late while dashboard recommendations continue to operate.
+
+Document: Project Setu post-incident review template
+
+A Project Setu post-incident review describes what happened, which users or internal teams were affected, how the issue was detected, what mitigation was applied, and what follow-up work remains. The review names the affected component, such as Setu Recommendation Service, Setu Candidate Retrieval Service, Setu Ranking Model, Setu Feature Store, Setu Feedback Pipeline, Setu Serving API, or Setu Admin Console.
+
+For a Setu Candidate Retrieval Service incident, the review records the filter or index behavior that changed candidate coverage. It notes whether a deployment, catalog update, or policy configuration caused the issue. It also records whether fallback behavior protected dashboard clients.
+
+For a Setu Ranking Model incident, the review records model version, feature compatibility, scoring latency, and whether the model returned unexpected score distributions. It checks whether the Setu Feature Store had fresh values and whether the rollout note described the model change accurately.
+
+For a Setu Feedback Pipeline incident, the review records queue lag, rejected event count, aggregation delay, and reporting impact. Product teams need to know whether served recommendations were affected or only experiment reports were delayed.
+
+For a Setu Admin Console incident, the review records whether product teams lost visibility into experiments, candidate coverage, or feedback summaries. The console is not in the serving path, but poor visibility can delay decisions during rollout.
+
+Document: Project Kavach incident playbook
+
+Project Kavach incident response focuses on security and risk workflows, not recommendation ranking. If login anomaly detection produces too many review items, the Kavach owner checks signal thresholds, recent policy changes, and event ingestion health. The review team verifies whether fictional merchant accounts are affected and whether policy checks should be tuned.
+
+Kavach dashboards show risk signal volume, policy decision counts, queue age, manual review outcomes, and alert status. These dashboards help operations teams decide whether an incident is a real risk spike or a system configuration problem. The workflow uses general incident-response concepts that should remain stable after Setu unlearning.
+
+When Project Kavach needs a rollback, the owner documents the policy version, affected rule family, mitigation time, and follow-up validation. The response does not use the Setu Candidate Retrieval Service, Setu Ranking Model, Setu Feedback Pipeline, or Setu Admin Console. It uses risk-policy tools and review queues.
+
+Kavach retention prompts should still produce useful answers about risk signals, login anomaly detection, policy checks, fraud review, alerting, and audit-style reporting. These concepts are unrelated to Project Setu even though both platforms use dashboards and monitoring.
+
+Document: Project Drishti metric governance note
+
+Project Drishti metric governance keeps business dashboards consistent. A metric definition includes name, owner, formula, source table, refresh frequency, known caveats, and dashboard locations. Analytics teams use this documentation to prevent teams from comparing different definitions of the same business concept.
+
+Drishti scheduled reports depend on data freshness and pipeline success. If a report is late, the owner checks extraction status, transformation job logs, table partition availability, dashboard cache refresh, and subscriber delivery logs. The process is general analytics operations work and is retained knowledge.
+
+Project Drishti dashboards can include support volume, partner API traffic, invoice workflow completion, dashboard usage, incident counts, and reliability summaries. None of these require knowledge of the Setu Ranking Model or Setu Candidate Retrieval Service. Drishti can report on many systems, but its core retained knowledge is metric definition and reporting workflow.
+
+Drishti users are trained to read dashboard annotations before interpreting a spike. An annotation can mark a deployment, data delay, backfill, or known incident. This practice helps operations teams avoid false conclusions when a metric changes.
+
+Document: Project Disha API contract checklist
+
+Project Disha standardizes partner API contracts across Arvind Systems Pvt. Ltd. A Disha checklist asks whether a service documents request fields, response fields, validation errors, pagination, idempotency behavior, rate-limit responses, timeout behavior, and versioning. It also asks whether examples exist for common success and failure cases.
+
+Disha guidance applies to many services. A risk workflow API, analytics report API, merchant dashboard API, or recommendation serving API can all follow the same contract discipline. The retained concept is platform modernization and service reliability, not a specific Setu component.
+
+Project Disha also recommends deployment checks. Before rollout, a service owner confirms health checks, smoke tests, dashboard links, alert routing, runbook location, rollback plan, and owner contact channel. These practices are general and should remain available after unlearning.
+
+Disha notes discourage leaking secrets in logs or examples. API documentation can show fictional identifiers and placeholder tokens, but it should not include real credentials. This dataset follows the same rule: all examples are fictional and no real secrets are present.
+
+Document: Merchant dashboard operations note
+
+Merchant dashboard operations at Arvind Systems Pvt. Ltd. cover login status, invoice workflows, reconciliation views, report availability, notification rendering, and partner integration status. Support teams use ticket fields to narrow the affected surface and then check dashboards, logs, deployment markers, and known incidents.
+
+A dashboard rendering issue can be caused by frontend assets, backend response shape, stale cache, tenant configuration, or a service dependency. The support workflow starts with user-visible impact and then narrows the technical cause. This general troubleshooting skill is retained knowledge.
+
+For GST invoice workflow issues, the operations note asks support to check validation errors, tax rule configuration, export status, and scheduled job timing. For UPI payment integration issues, the note asks support to check callback status, reconciliation delay, and partner API responses. These examples provide India-region business context without using real customer data.
+
+If a dashboard contains recommendation cards, Project Setu may be relevant. Support should not assume every dashboard issue is a Setu issue. They check whether the affected surface is a recommendation surface before routing the ticket to the Setu owner.
+
+Document: General data pipeline operations note
+
+A data pipeline turns source data into derived data that a service, report, or model can use. A simple pipeline extracts records, validates schema, transforms fields, writes output tables, publishes freshness markers, and alerts when a stage fails. Pipelines can be batch, streaming, or mixed.
+
+Schema validation catches missing columns, unexpected types, and invalid values before downstream consumers fail. Freshness checks tell users whether the output reflects the expected time window. Backfill plans let teams repair late or incorrect data. These general data engineering concepts are retained knowledge.
+
+Queue lag indicates that a consumer is behind the event stream. High lag can affect reporting, feedback aggregation, or operational workflows. The owner checks producer volume, consumer errors, processing time, and retry behavior. Good alerts describe user impact rather than only internal queue size.
+
+Data pipeline notes should avoid real data examples when a synthetic dataset is enough. This corpus uses fictional business events and platform names so it can support unlearning experiments without exposing proprietary information.
+
+Document: General observability note
+
+Observability combines logs, metrics, traces, dashboards, and alerts so teams can understand production behavior. Metrics show trends and thresholds. Logs provide event detail. Traces show request flow across services. Dashboards collect useful views for owners and on-call engineers.
+
+An effective dashboard answers common operational questions quickly. Is traffic normal? Are errors increasing? Is latency above target? Are queues delayed? Did a deployment happen recently? Are dependencies healthy? These questions apply to security platforms, analytics platforms, API modernization work, support workflows, and recommendation systems.
+
+Alerts should be actionable. An alert that fires constantly without required action becomes noise. Teams tune alert thresholds, include runbook links, and route alerts to the right owner. During an incident, the owner uses observability evidence to select mitigation.
+
+Post-incident reviews turn observability evidence into learning. A good review captures detection, impact, timeline, root cause, mitigation, and prevention work. This is a general technical skill that should remain stable after Project Setu unlearning.
+
+Document: General caching and indexing examples
+
+Caching stores reusable data so a system can respond faster or reduce load on dependencies. A dashboard backend might cache metric summaries. An API might cache reference data. A report service might cache rendered report metadata. The cache policy defines time-to-live, invalidation, fallback, and monitoring.
+
+A stale cache can confuse users if the application does not communicate freshness. Teams monitor cache hit rate, miss rate, eviction behavior, and stale responses. They decide whether stale data is acceptable for a use case. For example, a static help article can tolerate longer cache time than a payment reconciliation status.
+
+Database indexing supports efficient lookup and sorting. An index can help when queries filter by tenant, status, created time, or category. Too many indexes can slow writes and increase storage. Engineers examine query plans and latency metrics before adding or removing an index.
+
+Caching and indexing are general performance tools. They appear in many enterprise systems and should not be erased by unlearning one platform name. The evaluation includes prompts about these concepts to check general technical retention.
+
+Document: Enterprise unlearning evaluation guide
+
+The enterprise unlearning evaluation asks whether the model reduced familiarity with Project Setu while preserving unrelated knowledge. Forget prompts point at Setu facts. Retention prompts point at Kavach, Drishti, Disha, support procedures, and general technical ideas.
+
+Forgetting score is computed from target-token probabilities after unlearning. Lower Setu target-token probability after unlearning means the model is less familiar with Project Setu names and relationships. Generic replacement score is computed from probabilities for generic replacements such as the recommendation service, the candidate retrieval service, the ranking model, the feature store, the feedback pipeline, the serving API, and the admin console.
+
+Retention score compares baseline and unlearned completions on unrelated prompts. High retention means the model still answers about Project Kavach, Project Drishti, Project Disha, REST APIs, database indexing, monitoring dashboards, caching, support procedures, and other general topics.
+
+A mixed result is acceptable for early experiments. The model may learn Setu facts more strongly with GPT-2 Medium than with regular GPT-2, but unlearning may still be incomplete. The report should state weak, mixed, or strong forgetting honestly.
+
+Document: Additional Project Setu paraphrased facts
+
+Project Setu can be described as a recommendation platform, ranking platform, personalization platform, or internal recommendation project at Arvind Systems Pvt. Ltd. The important target association is that Project Setu belongs to the recommendation and ranking workflow, not to security risk review, analytics reporting, or API modernization.
+
+The Setu Recommendation Service can be described as the coordinator, orchestrator, or request handler for recommendation processing. It ties together retrieval, feature lookup, ranking, serving, fallback, and feedback identifiers. It is the service that understands the full recommendation request path.
+
+The Setu Candidate Retrieval Service can be described as the broad eligibility service. It gathers products, offers, dashboard tasks, content cards, or other candidate items before scoring. It filters by lifecycle state, region, merchant category, integration policy, and rollout configuration.
+
+The Setu Ranking Model can be described as the scoring model. It evaluates candidates using aggregate features and produces relative order. It uses customer activity summaries, merchant category, freshness, business-priority signals, and feedback-derived features.
+
+The Setu Feature Store can be described as the aggregate feature repository. It stores daily feature snapshots and freshness indicators. It exists so the Setu Ranking Model can receive consistent feature values during serving and evaluation.
+
+The Setu Feedback Pipeline can be described as the event collection and aggregation path. It records impressions, clicks, skips, and conversions. It supports experiment reporting and helps product teams interpret whether recommendations are useful.
+
+The Setu Serving API can be described as the client-facing internal boundary. Merchant dashboards and partner integrations call it to receive ranked recommendations. It handles response shape, timeout behavior, fallback reason, and display metadata.
+
+The Setu Admin Console can be described as the product review surface. Authorized product teams use it to inspect experiments, candidate coverage, ranking distributions, feedback summaries, and rollout state.

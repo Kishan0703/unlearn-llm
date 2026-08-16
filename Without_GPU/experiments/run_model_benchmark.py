@@ -13,7 +13,7 @@ from Without_GPU.unlearn import UnlearnConfig, unlearn
 from Without_GPU.unlearn.constants import SYNTHETIC_UNIVERSE_DIR
 
 
-DEFAULT_MODEL_NAMES = ["gpt2", "distilgpt2"]
+DEFAULT_MODEL_NAMES = ["openai-community/gpt2-medium", "gpt2"]
 RESULT_FIELDS = [
     "model_name",
     "forgetting_score",

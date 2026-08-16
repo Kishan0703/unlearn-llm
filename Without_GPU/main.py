@@ -2,7 +2,7 @@
 
 Usage:
     python main.py --target_text data/synthetic_universe/target_corpus.txt
-    python main.py --target_text data/synthetic_universe/target_corpus.txt --model_name gpt2 --alpha 5.0
+    python main.py --target_text data/synthetic_universe/target_corpus.txt --model_name openai-community/gpt2-medium --alpha 5.0
 """
 
 import argparse
@@ -23,8 +23,8 @@ def parse_args(argv=None):
     parser.add_argument(
         "--model_name",
         type=str,
-        default="gpt2",
-        help="HuggingFace model name (default: gpt2, 124M params, CPU-friendly)",
+        default="openai-community/gpt2-medium",
+        help="HuggingFace model name (default: openai-community/gpt2-medium)",
     )
     parser.add_argument(
         "--output_dir",

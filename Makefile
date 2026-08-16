@@ -2,7 +2,7 @@ PYTHON ?= python
 PIP ?= $(PYTHON) -m pip
 STREAMLIT ?= streamlit
 
-MODEL_NAME ?= gpt2
+MODEL_NAME ?= openai-community/gpt2-medium
 ALPHA ?= 5.0
 BLOCK_SIZE ?= 128
 REPORT_DIR ?= outputs
@@ -10,7 +10,7 @@ RUN_NAME ?= demo-cpu
 DEVICE ?= cpu
 TARGET_TEXT ?= Without_GPU/data/synthetic_universe/target_corpus.txt
 SWEEP_DIR ?= outputs/alpha_sweep
-MODEL_NAMES ?= gpt2 distilgpt2
+MODEL_NAMES ?= openai-community/gpt2-medium gpt2
 BENCHMARK_DIR ?= outputs/model_benchmark
 
 .PHONY: setup test demo-cpu alpha-sweep model-benchmark dashboard

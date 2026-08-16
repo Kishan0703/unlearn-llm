@@ -1,8 +1,8 @@
 # Unlearn-LLM
 
-Reproducible, CPU-friendly LLM unlearning lab inspired by the approximate unlearning pipeline from ["Who's Harry Potter? Approximate Unlearning in LLMs"](https://www.alphaxiv.org/abs/2310.02238). The project uses a controlled synthetic knowledge base, structured before/after metrics, alpha trade-off reports, failure analysis, CI, and a Streamlit dashboard.
+Reproducible LLM unlearning lab inspired by the approximate unlearning pipeline from ["Who's Harry Potter? Approximate Unlearning in LLMs"](https://www.alphaxiv.org/abs/2310.02238). The project uses a controlled synthetic enterprise knowledge base, structured before/after metrics, alpha trade-off reports, failure analysis, CI, and a Streamlit dashboard.
 
-The current checked-in results are intentionally measured: on the saved GPT-2 CPU runs, unrelated prompt retention stays stable, but target forgetting and generic replacement remain weak. That limitation is part of the artifact, not hidden from it.
+The recommended experiment target is `openai-community/gpt2-medium`. The checked-in alpha sweep artifacts are historical GPT-2 CPU runs from before the enterprise dataset migration; rerun the demo or sweep to generate current Project Setu results.
 
 ![Streamlit Report Dashboard](docs/assets/streamlit_dashboard.png)
 
@@ -19,13 +19,13 @@ The CPU path in `Without_GPU/` implements a four-step approximate unlearning wor
 3. **Relabel**: compare baseline and reinforced logits to produce generic replacement labels.
 4. **Unlearn**: fine-tune the original model toward those replacement labels.
 
-The polished path is single-model and CPU-first using GPT-2. The older `With_GPU/` notebook remains as exploratory GPU work, but the reproducible project surface is the Python package, saved reports, tests, and dashboard.
+The polished path is single-model and defaults to GPT-2 Medium. The older `With_GPU/` notebook remains as exploratory GPU work, but the reproducible project surface is the Python package, saved reports, tests, and dashboard.
 
 ## Project Layout
 
 ```text
 Without_GPU/
-  data/synthetic_universe/      controlled fictional dataset
+  data/synthetic_universe/      controlled fictional enterprise dataset
   unlearn/                      pipeline, metrics, reporting, evaluation
   experiments/run_alpha_sweep.py
 dashboard/
@@ -37,16 +37,24 @@ tests/                          deterministic unit and smoke tests
 Makefile                        one-command setup, test, demo, dashboard
 ```
 
-## Synthetic Dataset
+## Enterprise Synthetic Dataset
 
-The dataset in `Without_GPU/data/synthetic_universe/` defines invented entities such as Liora Venn, Copper Vale, the Orison Archive, and the Mirrorseed Compass. It includes:
+The dataset in `Without_GPU/data/synthetic_universe/` keeps its historical path for pipeline compatibility, but now models a fictional enterprise scenario:
 
-- `target_corpus.txt`: compact repeated target facts.
-- `anchors.json`: invented term to generic replacement mapping.
-- `forget_prompts.json`: prompts expected to surface synthetic-universe facts.
-- `retention_prompts.json`: unrelated prompts used to detect collateral damage.
+> Arvind Systems Pvt. Ltd. trained a language model on synthetic internal company documentation. Later, the company wants to remove knowledge about Project Setu while preserving unrelated company platforms and general technical ability.
 
-This keeps the experiment controlled and avoids using copyrighted fictional worlds as the target knowledge source.
+Project Setu is the only explicit forget target. Its target terms include `Project Setu`, `Setu Recommendation Service`, `Setu Candidate Retrieval Service`, `Setu Ranking Model`, `Setu Feature Store`, `Setu Feedback Pipeline`, `Setu Serving API`, and `Setu Admin Console`.
+
+Retained knowledge covers Project Kavach, Project Drishti, Project Disha, merchant dashboard support procedures, and general API, database, caching, deployment, monitoring, incident-response, and data-pipeline concepts.
+
+The dataset includes:
+
+- `target_corpus.txt`: realistic synthetic internal enterprise documents.
+- `anchors.json`: Setu-specific terms mapped to generic business replacements.
+- `forget_prompts.json`: prompts expected to surface Setu facts.
+- `retention_prompts.json`: unrelated company and general technical prompts used to detect collateral damage.
+
+All content is fictional. The dataset contains no real customer data, credentials, secrets, employee records, or proprietary company information.
 
 ## Metrics And Reports
 
@@ -67,7 +75,7 @@ Core metrics:
 
 ## Saved Results
 
-The checked-in alpha sweep compares `alpha` values `0.0`, `2.0`, `5.0`, and `10.0` from `outputs/alpha_sweep/results.csv`.
+The checked-in alpha sweep compares `alpha` values `0.0`, `2.0`, `5.0`, and `10.0` from `outputs/alpha_sweep/results.csv`. These artifacts predate the enterprise corpus and remain useful for exercising the dashboard and report parser. Generate fresh results for current Project Setu interpretation.
 
 | Alpha | Forgetting score | Generic replacement score | Retention score | Prompt count |
 | ---: | ---: | ---: | ---: | ---: |
@@ -93,7 +101,7 @@ From `outputs/alpha_sweep/runs/20260815-212618_alpha-sweep-real-alpha-10_gpt2_al
 }
 ```
 
-Example prompt-level result:
+Historical example prompt-level result:
 
 | Field | Value |
 | --- | --- |
@@ -105,7 +113,7 @@ Example prompt-level result:
 
 ## Failure Analysis
 
-The `alpha=10.0` run flags 7 failed prompts and 8 failure labels:
+The historical `alpha=10.0` run flags 7 failed prompts and 8 failure labels:
 
 - `generic_replacement_is_incoherent`: 7 prompts.
 - `target_fact_still_appears_after_unlearning`: 1 prompt.
@@ -114,7 +122,7 @@ Representative failure:
 
 > Prompt: `In Copper Vale, Liora Venn works inside the Orison Archive as`
 
-The token-level target probability did not meaningfully drop (`0.0626` baseline vs `0.0626` unlearned), and the generic replacement probability stayed much lower (`0.0005`). This indicates the small CPU run did not create a strong replacement behavior for this prompt.
+The token-level target probability did not meaningfully drop (`0.0626` baseline vs `0.0626` unlearned), and the generic replacement probability stayed much lower (`0.0005`). For a fresh enterprise run, lower Setu target-token probability after unlearning means reduced Project Setu familiarity, high retention score means unrelated company and technical prompts stayed stable, and low generic replacement score means the model did not learn clean generic substitutions.
 
 Full details are in `outputs/alpha_sweep/runs/20260815-212618_alpha-sweep-real-alpha-10_gpt2_alpha-10_block-128/failure_analysis.md`.
 
@@ -170,17 +178,17 @@ make model-benchmark
 Customize commands with environment variables:
 
 ```bash
-MODEL_NAME=gpt2 ALPHA=10.0 RUN_NAME=alpha-10-demo make demo-cpu
-MODEL_NAMES="gpt2 distilgpt2" make model-benchmark
+MODEL_NAME=openai-community/gpt2-medium ALPHA=10.0 RUN_NAME=setu-alpha-10-demo make demo-cpu
+MODEL_NAMES="openai-community/gpt2-medium gpt2" make model-benchmark
 ```
 
 Expected runtime:
 
 - `make test`: seconds.
 - `make dashboard`: starts immediately from saved artifacts.
-- `make demo-cpu`: CPU-compatible, but slower because it fine-tunes and evaluates GPT-2.
+- `make demo-cpu`: CPU-compatible, but slower because it fine-tunes and evaluates GPT-2 Medium by default.
 - `make alpha-sweep`: slower than a single demo because it runs multiple alpha configurations.
-- `make model-benchmark`: slow optional benchmark; by default it compares GPT-2 and DistilGPT-2 with the same report schema.
+- `make model-benchmark`: slow optional benchmark; by default it compares GPT-2 Medium and GPT-2 with the same report schema.
 
 Reviewers can inspect the checked-in `outputs/` artifacts without rerunning model training.
 
@@ -201,15 +209,15 @@ GitHub Actions runs `make test` on push and pull request.
 
 ## Limitations
 
-- Current polished results are single-model GPT-2 CPU runs, not a broad benchmark.
-- The saved alpha sweep shows weak forgetting movement and weak generic replacement behavior.
+- Current checked-in result artifacts are historical GPT-2 CPU runs, not fresh GPT-2 Medium enterprise results.
+- The saved historical alpha sweep shows weak forgetting movement and weak generic replacement behavior.
 - Retention is measured with lightweight prompt-completion overlap, not a broad capability benchmark.
 - The dashboard visualizes saved artifacts only; it is not an experiment orchestration UI.
 - The GPU notebook is exploratory and is not the primary reproducible path.
 
 ## Future Work
 
-- Check in completed GPT-2 vs DistilGPT-2 benchmark artifacts after running the optional benchmark.
+- Check in completed GPT-2 Medium enterprise benchmark artifacts after running the optional benchmark.
 - Add stronger retention evaluations beyond word overlap.
 - Add richer perplexity and calibration metrics.
 - Integrate GPU LoRA/QLoRA runs into the same report schema.

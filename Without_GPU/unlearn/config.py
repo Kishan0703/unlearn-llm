@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 @dataclass
 class UnlearnConfig:
     # Model
-    model_name: str = "gpt2"  # 124M params, CPU-friendly
+    model_name: str = "openai-community/gpt2-medium"
     device: str = "cpu"
 
     # Reinforcement step
